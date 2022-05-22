@@ -14,6 +14,7 @@ namespace BTL_KTPM.Data.configurations
         public void Configure(EntityTypeBuilder<Producer> builder)
         {
             builder.HasKey(x=>x.ProducerId);
+            builder.Property(x => x.ProducerId).UseIdentityColumn();
             builder.Property(x=>x.ProducerName).IsRequired();
         }
     }

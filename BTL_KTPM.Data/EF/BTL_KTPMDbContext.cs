@@ -51,5 +51,6 @@ namespace BTL_KTPM.Data.EF
         public DbSet<Producer> Producers { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
+        public DbSet<ProductInCategory> ProductInCategories { get; set; }
     }
 }
