@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "BTL_KTPM_Database": "Server=DESKTOP-3T571E1\\HAUTLYM;Database =BTL_KTPM;Trusted_Connection=True;"
+  }
+}
