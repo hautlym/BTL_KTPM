@@ -155,8 +155,8 @@ namespace BTL_KTPM.Application.Catalog.Products
 
         public async Task<ProductViewModel> GetById(int productId)
         {
-            var product = await _context.products.FindAsync(productId);
-
+            var product = await _context.products.Where(x=>x.Id == productId).FirstOrDefaultAsync();
+            if(product == null) throw new Exception($"Con not find product by id:{productId} ");
             var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,

@@ -58,7 +58,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             return Ok();
         }
         [HttpDelete("{productId}")]
-        public async Task<IActionResult> Delete([FromQuery] int productId)
+        public async Task<IActionResult> Delete([FromBody] int productId)
         {
             var Result = await _manageProductService.Delete(productId);
             if (Result == 0)
