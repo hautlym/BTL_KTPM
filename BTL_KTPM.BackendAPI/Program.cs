@@ -1,3 +1,5 @@
+using BTL_KTPM.Application.Catalog.Common;
+using BTL_KTPM.Application.Catalog.Products;
 using BTL_KTPM.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BTL_KTPMDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("BTL_KTPM_Database")));
+builder.Services.AddTransient<IStorageService, FileStorageService>();
+builder.Services.AddTransient<IPublicProductService, PublicProductService>();
+builder.Services.AddTransient<IManageProductService, ManageProductService>();
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

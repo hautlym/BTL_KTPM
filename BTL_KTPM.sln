@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTL_KTPM.Data", "BTL_KTPM.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTL_KTPM.BackendAPI", "BTL_KTPM.BackendAPI\BTL_KTPM.BackendAPI.csproj", "{958F987A-80AD-4DE2-BC2C-B361B63A8376}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTL_KTPM.WebMvc", "BTL_KTPM.WebMvc\BTL_KTPM.WebMvc.csproj", "{BFA7323D-79D1-4CCF-A4D5-8CA4BF20E49F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTL_KTPM.WebMvc", "BTL_KTPM.WebMvc\BTL_KTPM.WebMvc.csproj", "{BFA7323D-79D1-4CCF-A4D5-8CA4BF20E49F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTL_KTPM.Application", "BTL_KTPM.Application\BTL_KTPM.Application.csproj", "{1822C81C-6C00-41A7-A291-29384A2EA8E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTL_KTPM.Application", "BTL_KTPM.Application\BTL_KTPM.Application.csproj", "{1822C81C-6C00-41A7-A291-29384A2EA8E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\ViewModels.csproj", "{BAFDA644-3EE0-459E-A44A-90E689A2DFE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "ViewModels\ViewModels.csproj", "{BAFDA644-3EE0-459E-A44A-90E689A2DFE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTL_KTPM.ViewModels", "BTL_KTPM.ViewModels\BTL_KTPM.ViewModels.csproj", "{8C38F9DD-F7BD-4BD8-8064-E362112CF379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BAFDA644-3EE0-459E-A44A-90E689A2DFE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAFDA644-3EE0-459E-A44A-90E689A2DFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAFDA644-3EE0-459E-A44A-90E689A2DFE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C38F9DD-F7BD-4BD8-8064-E362112CF379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C38F9DD-F7BD-4BD8-8064-E362112CF379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C38F9DD-F7BD-4BD8-8064-E362112CF379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C38F9DD-F7BD-4BD8-8064-E362112CF379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

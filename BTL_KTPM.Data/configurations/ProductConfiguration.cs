@@ -22,6 +22,7 @@ namespace BTL_KTPM.Data.configurations
             builder.Property(x => x.ProductOriginalPrice).IsRequired();
             builder.Property(x => x.ProductTitle).IsRequired();
             builder.HasOne(x => x.Producers).WithMany(x => x.Products).HasForeignKey(x => x.ProducerId);
+            builder.HasOne(x => x.category).WithMany(x => x.products).HasForeignKey(x => x.CategoryId);
         }
     }
 }

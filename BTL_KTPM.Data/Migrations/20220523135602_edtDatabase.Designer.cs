@@ -4,6 +4,7 @@ using BTL_KTPM.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_KTPM.Data.Migrations
 {
     [DbContext(typeof(BTL_KTPMDbContext))]
-    partial class BTL_KTPMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220523135602_edtDatabase")]
+    partial class edtDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -13,6 +13,7 @@ namespace BTL_KTPM.Application.Catalog.Products
         Task<int> Create(ProductCreateRequest request);
 
         Task<int> Update(ProductUpdateRequest request);
+        Task<ProductViewModel> GetById(int productId);
 
         Task<int> Delete(int productId);
         List<ProductViewModel> GetAll();

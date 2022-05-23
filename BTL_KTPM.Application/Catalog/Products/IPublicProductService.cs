@@ -10,6 +10,8 @@ namespace BTL_KTPM.Application.Catalog.Products
 {
     public interface IPublicProductService
     {
-        public Task<PageResult<ProductViewModel>> getAllByCategoryId(GetProductPagingRequest request);
+         Task<PageResult<ProductViewModel>> getAllByCategoryId(GetPublicProductRequest request);
+
+         Task<List<ProductViewModel>> GetAll ();
     }
 }
