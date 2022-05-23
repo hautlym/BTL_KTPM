@@ -14,6 +14,7 @@ namespace BTL_KTPM.Data.configurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(x=>x.ProductPrice).IsRequired();
             builder.Property(x => x.ProductName).IsRequired();
             builder.Property(x => x.ProductTitle).IsRequired();
@@ -21,6 +22,7 @@ namespace BTL_KTPM.Data.configurations
             builder.Property(x => x.ProductOriginalPrice).IsRequired();
             builder.Property(x => x.ProductTitle).IsRequired();
             builder.HasOne(x => x.Producers).WithMany(x => x.Products).HasForeignKey(x => x.ProducerId);
+            builder.HasOne(x => x.category).WithMany(x => x.products).HasForeignKey(x => x.CategoryId);
         }
     }
 }
