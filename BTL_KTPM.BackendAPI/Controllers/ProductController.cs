@@ -25,32 +25,47 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpGet("public-paging")]
-        public async Task<IActionResult> Get([FromQuery] GetPublicProductRequest request)
+        public async Task<IActionResult> Get([FromQuery]GetPublicProductRequest request)
         {
-            var product = _publicProductService.getAllByCategoryId(request);
+            var product =await _publicProductService.getAllByCategoryId(request);
             return Ok(product);
         }
         [HttpGet("{productId}")]
-        public async Task<IActionResult> GetbyId(int productId)
+        public async Task<IActionResult> GetById(int productId)
         {
-            var product = _manageProductService.GetById(productId);
+            var product =await _manageProductService.GetById(productId);
             if (product == null)
+            {
                 return NotFound();
-            return Ok(product);
+            }
+            else
+            {
+                return Ok(product);
+
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var result = await _manageProductService.Create(request);
             if (result == 0)
                 return BadRequest();
             var product = await _manageProductService.GetById(result);
-            return Created(nameof(GetbyId), product);
+           return Created(nameof(GetById), product);
+            //return CreatedAtAction(nameof(GetbyId), new { id = result }, product);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var Result = await _manageProductService.Update(request);
             if (Result == 0)
                 return BadRequest();
@@ -58,7 +73,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             return Ok();
         }
         [HttpDelete("{productId}")]
-        public async Task<IActionResult> Delete([FromBody] int productId)
+        public async Task<IActionResult> Delete( int productId)
         {
             var Result = await _manageProductService.Delete(productId);
             if (Result == 0)

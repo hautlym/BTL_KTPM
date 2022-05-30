@@ -43,28 +43,33 @@ namespace BTL_KTPM.Application.Catalog.Products
             };
             if (request.ThumbnailImage != null)
             {
-                product.productImgs = new List<ProductImg>()
+                var listImg = new List<ProductImg>();
+                for(int i= 0;i<request.ThumbnailImage.Count; i++)
                 {
-                    new ProductImg()
+                    var ProductImg = new ProductImg()
                     {
-                        Caption = "Thumbnail Image",
-                        FileSize = request.ThumbnailImage.Length,
-                        ImagePath = await this.SaveFile(request.ThumbnailImage),
-                        IsDefault = true,
-                        SortOrder=1
-                    }
-                };
+                        Caption = request.ProductName+""+i,
+                        FileSize = request.ThumbnailImage[i].Length,
+                        ImagePath = await this.SaveFile(request.ThumbnailImage[i]),
+                        IsDefault = i==0?true:false,
+                        DateCreated = DateTime.Now,
+                        SortOrder = i+1
+                    };
+                    listImg.Add(ProductImg);
+                }    
+                product.productImgs = listImg;
             }
 
             _context.products.Add(product);
-            return await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
+            return product.Id;
 
         }
 
         public async Task<int> Delete(int productId)
         {
             var product = await _context.products.Where(x=>x.Id==productId).FirstOrDefaultAsync();
-            if (product == null) throw new Exception("Can not find product");
+            if (product == null) throw new BTL_KTPMException("Can not find product");
             var image =  _context.productImgs.Where( x=>x.ProductId == productId);
             foreach (var img in image)
             {
@@ -107,6 +112,7 @@ namespace BTL_KTPM.Application.Catalog.Products
                     IsNewProduct = x.product.IsNewProduct,
                     Discount = x.product.Discount,
                     CategoryId = x.product.CategoryId,
+                    ThumbnailImage = x.product.productImgs
                 }).ToListAsync();
             var pageResult = new PageResult<ProductViewModel>
             {
@@ -120,9 +126,9 @@ namespace BTL_KTPM.Application.Catalog.Products
         {
             
             var product = await _context.products.FindAsync(request.Id);
-            if (product == null) throw new Exception("Can not find product");
+            if (product == null) throw new BTL_KTPMException("Can not find product");
             product.ProductName = request.ProductName;
-            product.ProductPrice = request.ProductOriginalPrice - (request.ProductOriginalPrice * (request.Discount) / 100);
+            product.ProductPrice = request.ProductOriginalPrice - (request.ProductOriginalPrice * ((request.Discount) / 100));
             product.ProductDescription = request.ProductDescription;
             product.ProductOriginalPrice = request.ProductOriginalPrice;
             product.ProductTitle = request.ProductTitle;
@@ -155,12 +161,11 @@ namespace BTL_KTPM.Application.Catalog.Products
 
         public async Task<ProductViewModel> GetById(int productId)
         {
-            var product = await _context.products.Where(x=>x.Id == productId).FirstOrDefaultAsync();
-            if(product == null) throw new Exception($"Con not find product by id:{productId} ");
-            var productViewModel = new ProductViewModel()
+            var products = _context.products.Where(x=>x.Id == productId).Select(product=> new ProductViewModel()
             {
                 Id = product.Id,
                 ProductName = product.ProductName,
+                ProductPrice = product.ProductPrice,
                 ProductDescription = product.ProductDescription,
                 ProductOriginalPrice = product.ProductOriginalPrice,
                 ProductTitle = product.ProductTitle,
@@ -169,8 +174,12 @@ namespace BTL_KTPM.Application.Catalog.Products
                 IsNewProduct = product.IsNewProduct,
                 Discount = product.Discount,
                 CategoryId = product.CategoryId,
-            };
-            return productViewModel;
+                ThumbnailImage = product.productImgs
+            }).FirstOrDefault();
+            //if(product == null) 
+            //    throw new BTL_KTPMException("Can not find product");
+            return products;
+            
         }
     }
 
