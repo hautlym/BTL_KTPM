@@ -20,7 +20,6 @@ namespace BTL_KTPM.Data.configurations
 
             builder.Property(x => x.ImagePath).HasMaxLength(200).IsRequired(true);
             builder.Property(x => x.Caption).HasMaxLength(200);
-
             builder.HasOne(x => x.Product).WithMany(x => x.productImgs).HasForeignKey(x => x.ProductId);
         }
     }
