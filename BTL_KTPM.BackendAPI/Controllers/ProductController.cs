@@ -45,7 +45,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
+        public async Task<IActionResult> Create([FromQuery]ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        public async Task<IActionResult> Update([FromQuery] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

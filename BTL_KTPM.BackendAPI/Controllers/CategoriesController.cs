@@ -37,8 +37,8 @@ namespace BTL_KTPM.BackendAPI.Controllers
 
             }
         }
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryRequest request)
+        [HttpPost("add_category")]
+        public async Task<IActionResult> Create([FromQuery]CreateCategoryRequest request)
         {
             var result = await _manageCategory.Create(request);
             if (result == 0)
@@ -53,7 +53,6 @@ namespace BTL_KTPM.BackendAPI.Controllers
             var Result = await _manageCategory.Update(request);
             if (Result == 0)
                 return BadRequest();
-
             return Ok();
         }    
 

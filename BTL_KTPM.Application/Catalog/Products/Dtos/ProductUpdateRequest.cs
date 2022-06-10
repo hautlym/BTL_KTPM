@@ -19,6 +19,6 @@ namespace BTL_KTPM.Application.Catalog.Products.Dtos
         public double Discount { get; set; }
         public int ProducerId { get; set; }
         public int CategoryId { get; set; }
-        public IFormFile ThumbnailImage { get; set; }
+        public IFormFile? ThumbnailImage { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_KTPM.Data.Migrations
 {
     [DbContext(typeof(BTL_KTPMDbContext))]
-    [Migration("20220517111105_initial")]
-    partial class initial
+    [Migration("20220608153723_editAppUser")]
+    partial class editAppUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,6 +72,10 @@ namespace BTL_KTPM.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -122,6 +126,10 @@ namespace BTL_KTPM.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("sex")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -340,6 +348,9 @@ namespace BTL_KTPM.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CountComment")
                         .HasColumnType("int");
 
@@ -358,33 +369,15 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductImg1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductImg2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductImg3")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductImg4")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductOriginalPrice")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("ProductOriginalPrice")
+                        .HasColumnType("float");
 
-                    b.Property<string>("ProductPrice")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("ProductPrice")
+                        .HasColumnType("float");
 
                     b.Property<string>("ProductTitle")
                         .IsRequired()
@@ -392,24 +385,51 @@ namespace BTL_KTPM.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("ProducerId");
 
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("BTL_KTPM.Data.entities.ProductInCategory", b =>
+            modelBuilder.Entity("BTL_KTPM.Data.entities.ProductImg", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Caption")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "CategoryId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("ProductInCategory");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -560,6 +580,12 @@ namespace BTL_KTPM.Data.Migrations
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Product", b =>
                 {
+                    b.HasOne("BTL_KTPM.Data.entities.Category", "category")
+                        .WithMany("products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BTL_KTPM.Data.entities.Producer", "Producers")
                         .WithMany("Products")
                         .HasForeignKey("ProducerId")
@@ -567,23 +593,17 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Producers");
+
+                    b.Navigation("category");
                 });
 
-            modelBuilder.Entity("BTL_KTPM.Data.entities.ProductInCategory", b =>
+            modelBuilder.Entity("BTL_KTPM.Data.entities.ProductImg", b =>
                 {
-                    b.HasOne("BTL_KTPM.Data.entities.Category", "Category")
-                        .WithMany("ProductInCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BTL_KTPM.Data.entities.Product", "Product")
-                        .WithMany("ProductInCategory")
+                        .WithMany("productImgs")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("Product");
                 });
@@ -597,7 +617,7 @@ namespace BTL_KTPM.Data.Migrations
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Category", b =>
                 {
-                    b.Navigation("ProductInCategories");
+                    b.Navigation("products");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Order", b =>
@@ -616,7 +636,7 @@ namespace BTL_KTPM.Data.Migrations
 
                     b.Navigation("OrderDetail");
 
-                    b.Navigation("ProductInCategory");
+                    b.Navigation("productImgs");
                 });
 #pragma warning restore 612, 618
         }
