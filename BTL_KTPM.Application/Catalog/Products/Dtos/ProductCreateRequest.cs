@@ -18,7 +18,7 @@ namespace BTL_KTPM.Application.Catalog.Products.Dtos
         public int ProducerId { get; set; }
         public int CategoryId { get; set; }
 
-        public List<IFormFile> ThumbnailImage { get; set; }
+        public List<IFormFile>? ThumbnailImage { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BTL_KTPM.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class intialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -225,23 +225,26 @@ namespace BTL_KTPM.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductImg1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductImg2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductImg3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductImg4 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductPrice = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductPrice = table.Column<double>(type: "float", nullable: false),
                     ProductTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductOriginalPrice = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductOriginalPrice = table.Column<double>(type: "float", nullable: false),
                     ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsNewProduct = table.Column<bool>(type: "bit", nullable: false),
                     CountComment = table.Column<int>(type: "int", nullable: false),
                     Discount = table.Column<double>(type: "float", nullable: false, defaultValue: 0.0),
-                    ProducerId = table.Column<int>(type: "int", nullable: false)
+                    ProducerId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_products_Producers_ProducerId",
                         column: x => x.ProducerId,
@@ -308,23 +311,24 @@ namespace BTL_KTPM.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductInCategory",
+                name: "ProductImages",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    ImagePath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Caption = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductInCategory", x => new { x.ProductId, x.CategoryId });
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductInCategory_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductInCategory_products_ProductId",
+                        name: "FK_ProductImages_products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "products",
                         principalColumn: "Id",
@@ -357,8 +361,13 @@ namespace BTL_KTPM.Data.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductInCategory_CategoryId",
-                table: "ProductInCategory",
+                name: "IX_ProductImages_ProductId",
+                table: "ProductImages",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_products_CategoryId",
+                table: "products",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -403,19 +412,19 @@ namespace BTL_KTPM.Data.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "ProductInCategory");
+                name: "ProductImages");
 
             migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "products");
 
             migrationBuilder.DropTable(
                 name: "AppUser");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Producers");

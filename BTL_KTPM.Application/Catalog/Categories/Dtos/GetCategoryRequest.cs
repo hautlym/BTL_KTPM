@@ -8,6 +8,7 @@ namespace BTL_KTPM.Application.Catalog.Categories
 {
     public class GetCategoryRequest
     {
+        public int id { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
     }

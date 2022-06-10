@@ -32,6 +32,7 @@ namespace BTL_KTPM.Data.EF
             modelBuilder.ApplyConfiguration(new NewsConfiguration());
             modelBuilder.ApplyConfiguration(new ProducerConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConnfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.RoleId, x.UserId });
@@ -52,5 +53,6 @@ namespace BTL_KTPM.Data.EF
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<ProductImg> productImgs { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }

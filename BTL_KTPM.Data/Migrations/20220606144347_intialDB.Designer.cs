@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_KTPM.Data.Migrations
 {
     [DbContext(typeof(BTL_KTPMDbContext))]
-    [Migration("20220523135602_edtDatabase")]
-    partial class edtDatabase
+    [Migration("20220606144347_intialDB")]
+    partial class intialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
