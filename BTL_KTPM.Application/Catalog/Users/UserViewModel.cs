@@ -10,12 +10,12 @@ namespace BTL_KTPM.Application.Catalog.Users
     {
         public int id { get; set; }
         public string UserName { get; set; }
-        public int Password { get; set; }
-        public int Name { get; set; }
+        public string Password { get; set; }
+        public string Name { get; set; }
         public string Dob { get; set; }
         public string Address { get; set; }
         public bool Sex { get; set; }
         public string Roles { get; set; }
-
+        public string PhoneNumber { get; set; }
     }
 }

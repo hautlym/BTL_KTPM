@@ -13,5 +13,6 @@ namespace BTL_KTPM.Application.Catalog.Products
          Task<PageResult<ProductViewModel>> getAllByCategoryId(GetPublicProductRequest request);
 
          Task<List<ProductViewModel>> GetAll ();
+         Task<List<ProductViewModel>> GetProductByName (string Name);
     }
 }

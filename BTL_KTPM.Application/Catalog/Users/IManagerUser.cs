@@ -1,4 +1,5 @@
 ﻿using BTL_KTPM.Application.Catalog.Users.Dtos;
+using BTL_KTPM.Data.entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace BTL_KTPM.Application.Catalog.Users
         Task<int> Update(UpdateUserRequest request);
         Task<int> Delete(int UserId);
         Task<UserViewModel> GetById(int userId);
+        Task<UserViewModel> Login(string user,string pass);
     }
 }

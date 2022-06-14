@@ -1,7 +1,9 @@
+using BTL_KTPM.Application.Catalog.Carts;
 using BTL_KTPM.Application.Catalog.Categories;
 using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.Products;
 using BTL_KTPM.Application.Catalog.System;
+using BTL_KTPM.Application.Catalog.Users;
 using BTL_KTPM.Data.EF;
 using BTL_KTPM.Data.entities;
 using Microsoft.AspNetCore.Identity;
@@ -19,12 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews()
                 .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddDbContext<BTL_KTPMDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("BTL_KTPM_Database")));
-builder.Services.AddIdentity<AppUser,AppRoles>().AddEntityFrameworkStores<BTL_KTPMDbContext>().AddDefaultTokenProviders();
-
-
-
-
-
+builder.Services.AddIdentity<AppUser, AppRoles>().AddEntityFrameworkStores<BTL_KTPMDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddTransient<IStorageService, FileStorageService>();
 builder.Services.AddTransient<IPublicProductService, PublicProductService>();
@@ -34,8 +31,9 @@ builder.Services.AddTransient<IManageCategory, ManageCategory>();
 //builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 //builder.Services.AddTransient<RoleManager<AppUser>, RoleManager<AppUser>>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IManagerUser, ManagerUser>();
+builder.Services.AddTransient<IManageCart, ManagerCart>();
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

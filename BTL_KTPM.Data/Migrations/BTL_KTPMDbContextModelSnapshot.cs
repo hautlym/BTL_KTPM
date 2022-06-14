@@ -143,9 +143,6 @@ namespace BTL_KTPM.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -162,8 +159,6 @@ namespace BTL_KTPM.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ProductId");
 
@@ -451,11 +446,16 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Password")
-                        .HasColumnType("int");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Roles")
                         .IsRequired()
@@ -572,12 +572,6 @@ namespace BTL_KTPM.Data.Migrations
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Cart", b =>
                 {
-                    b.HasOne("BTL_KTPM.Data.entities.AppUser", "AppUser")
-                        .WithMany("Carts")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BTL_KTPM.Data.entities.Product", "Product")
                         .WithMany("Carts")
                         .HasForeignKey("ProductId")
@@ -589,8 +583,6 @@ namespace BTL_KTPM.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("Product");
 
@@ -659,8 +651,6 @@ namespace BTL_KTPM.Data.Migrations
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.AppUser", b =>
                 {
-                    b.Navigation("Carts");
-
                     b.Navigation("Orders");
                 });
 
