@@ -20,6 +20,9 @@ namespace BTL_KTPM.Application.Catalog.Users
         }
         public async Task<int> Create(CreateUserRequest request)
         {
+            var checkUser  = _dbContext.users.Where(x=>x.UserName == request.UserName).FirstOrDefault();
+            if (checkUser != null)
+                return -1;
             var user = new User()
             {
                 UserName = request.UserName,
@@ -28,7 +31,9 @@ namespace BTL_KTPM.Application.Catalog.Users
                 Sex = request.Sex,
                 Address = request.Address,
                 Name = request.Name,
-                Roles = "user"
+                Roles = "user",
+                PhoneNumber = request.PhoneNumber,
+                
             };
             _dbContext.users.Add(user);
             await _dbContext.SaveChangesAsync();
@@ -54,7 +59,9 @@ namespace BTL_KTPM.Application.Catalog.Users
                 Roles= x.Roles,
                 Address = x.Address,
                 Sex= x.Sex,
-                Dob= x.Dob
+                Dob= x.Dob,
+                PhoneNumber = x.PhoneNumber,
+                
                 
             }).ToListAsync();
             return data;
@@ -76,6 +83,7 @@ namespace BTL_KTPM.Application.Catalog.Users
                     Address = user.Address,
                     Sex = user.Sex,
                     Dob = user.Dob,
+                    PhoneNumber= user.PhoneNumber,
                 };
                 return userViewModel;
             }
@@ -83,6 +91,28 @@ namespace BTL_KTPM.Application.Catalog.Users
             {
                 return null;
             }
+        }
+
+        public async Task<UserViewModel> Login(string username, string pass)
+        {
+            var user =await _dbContext.users.Where(x=>x.UserName == username&& x.Password==pass).FirstOrDefaultAsync();
+            if(user != null)
+            {
+                var userViewModel = new UserViewModel()
+                {
+                    id = user.id,
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    Name = user.Name,
+                    Roles = user.Roles,
+                    Address = user.Address,
+                    Sex = user.Sex,
+                    Dob = user.Dob,
+                    PhoneNumber = user.PhoneNumber,
+                };
+                return userViewModel;
+            }
+            return null;
         }
 
         public async Task<int> Update(UpdateUserRequest request)
@@ -95,7 +125,8 @@ namespace BTL_KTPM.Application.Catalog.Users
             user.Dob = request.Dob;
             user.Sex = request.Sex;
             user.Address = request.Address;
-            user.Roles = "user";
+            user.Roles = request.Roles;
+            user.PhoneNumber = request.PhoneNumber;
             _dbContext.users.Update(user);
             return await _dbContext.SaveChangesAsync();
         }

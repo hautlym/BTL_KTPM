@@ -1,5 +1,4 @@
 ﻿using BTL_KTPM.Application.Catalog.System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BTL_KTPM.BackendAPI.Controllers
@@ -9,22 +8,25 @@ namespace BTL_KTPM.BackendAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+
         public UsersController(IUserService userService)
         {
             _userService = userService;
         }
+
         [HttpPost("login")]
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var resultToken =await _userService.Authencate(request);
-            if(string.IsNullOrEmpty(resultToken))
+            var resultToken = await _userService.Authencate(request);
+            if (string.IsNullOrEmpty(resultToken))
             {
                 return BadRequest("Username or password incorrect");
-            }    
+            }
             return Ok(new { token = resultToken });
         }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm] RegisterRequest request)
         {
@@ -37,6 +39,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             }
             return Ok();
         }
+
         //[HttpPut("{id}")]
         //public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
         //{
@@ -65,7 +68,6 @@ namespace BTL_KTPM.BackendAPI.Controllers
         //    return Ok(result);
         //}
 
-        
         //[HttpGet("paging")]
         //public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         //{
@@ -88,4 +90,3 @@ namespace BTL_KTPM.BackendAPI.Controllers
         //}
     }
 }
-

@@ -1,7 +1,6 @@
 ﻿using BTL_KTPM.Application.Catalog.Categories;
 using BTL_KTPM.Application.Catalog.Categories.Dtos;
 using BTL_KTPM.Data.EF;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BTL_KTPM.BackendAPI.Controllers
@@ -12,17 +11,20 @@ namespace BTL_KTPM.BackendAPI.Controllers
     {
         private readonly BTL_KTPMDbContext _context;
         private readonly IManageCategory _manageCategory;
+
         public CategoriesController(BTL_KTPMDbContext context, IManageCategory manageCategory)
         {
             _context = context;
             _manageCategory = manageCategory;
         }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var categories = await _manageCategory.GetAllCategory();
             return Ok(categories);
         }
+
         [HttpGet("{CategoryId}")]
         public async Task<IActionResult> GetbyId(int CategoryId)
         {
@@ -34,11 +36,11 @@ namespace BTL_KTPM.BackendAPI.Controllers
             else
             {
                 return Ok(category);
-
             }
         }
+
         [HttpPost("add_category")]
-        public async Task<IActionResult> Create([FromQuery]CreateCategoryRequest request)
+        public async Task<IActionResult> Create([FromQuery] CreateCategoryRequest request)
         {
             var result = await _manageCategory.Create(request);
             if (result == 0)
@@ -54,7 +56,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             if (Result == 0)
                 return BadRequest();
             return Ok();
-        }    
+        }
 
         [HttpDelete("{CategoryId}")]
         public async Task<IActionResult> Delete(int CategoryId)

@@ -87,6 +87,30 @@ namespace BTL_KTPM.Application.Catalog.Products
             return pageResult;
         }
 
-        
+        public async Task<List<ProductViewModel>> GetProductByName(string Name)
+        {
+            var query = from product in _context.products
+                        where product.ProductName.Contains(Name)
+                        select product;
+            //var imgdata = img.ToList();
+            var data = await query
+            .Select(x => new ProductViewModel()
+            {
+                Id = x.Id,
+                ProductName = x.ProductName,
+                ProductPrice = x.ProductPrice,
+                ProductDescription = x.ProductDescription,
+                ProductOriginalPrice = x.ProductOriginalPrice,
+                ProductTitle = x.ProductTitle,
+                CountComment = x.CountComment,
+                ProducerId = x.ProducerId,
+                IsNewProduct = x.IsNewProduct,
+                Discount = x.Discount,
+                CategoryId = x.CategoryId,
+                ThumbnailImage = x.productImgs
+            }).ToListAsync();
+
+            return data;
+        }
     }
 }

@@ -41,23 +41,123 @@ namespace BTL_KTPM.Application.Catalog.Carts
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<CartViewModel>> GetAllCart(int UserId)
+        public async Task<List<CartViewModel>> GetAllCart()
         {
-            var data = await _context.Carts.Where(x=>x.UserId==UserId).Select(x => new CartViewModel()
+            var cart = from p in _context.products
+                       join c in _context.Carts on p.Id equals c.ProductId
+                       join u in _context.users on c.UserId equals u.id
+                       select new
+                       {
+                           UserName = u.Name,
+                           CartId = c.Id,
+                           ProductName = p.ProductName,
+                           ProductPrice = p.ProductPrice,
+                           Discount = p.Discount,
+                           Quantity = c.Quantity,
+                           Img = p.productImgs.Count>0?p.productImgs[0].ImagePath : "",
+                           Address = u.Address,
+                       };
+
+            var data = await cart.Select(x => new CartViewModel()
             {
-                
+                id = x.CartId,
+                UserName = x.UserName,
+                Discount= x.Discount,
+                ProductNane = x.ProductName,
+                ProductPrice = x.ProductPrice,
+                Quantity = x.Quantity,
+                ImgUrl = x.Img,
+                Address =x.Address
             }).ToListAsync();
             return data;
         }
 
-        public Task<CartViewModel> GetById(int categoryId)
+        public async Task<List<CartViewModel>> GetAllCartByUserId(int UserId )
         {
-            throw new NotImplementedException();
+            var cart = from p in _context.products
+                       join c in _context.Carts on p.Id equals c.ProductId
+                       join u in _context.users on c.UserId equals u.id
+                       select new
+                       {
+                           UserId = u.id,
+                           UserName = u.Name,
+                           CartId = c.Id,
+                           ProductName = p.ProductName,
+                           ProductPrice = p.ProductPrice,
+                           Discount = p.Discount,
+                           Quantity = c.Quantity,
+                           Img = p.productImgs.Count > 0 ? p.productImgs[0].ImagePath : "",
+                           Address = u.Address
+                       };
+
+            var data = await cart.Where(x=>x.UserId == UserId).Select(x => new CartViewModel()
+            {
+                id = x.CartId,
+                UserName = x.UserName,
+                Discount = x.Discount,
+                ProductNane = x.ProductName,
+                ProductPrice = x.ProductPrice,
+                Quantity = x.Quantity,
+                ImgUrl= x.Img,
+                Address = x.Address
+            }).ToListAsync();
+            return data;
         }
 
-        public Task<int> Update(UpdateCartRequest request)
+        public async Task<CartViewModel> GetById(int CartId)
         {
-            throw new NotImplementedException();
+
+            var cart = from p in _context.products
+                       join c in _context.Carts on p.Id equals c.ProductId
+                       join u in _context.users on c.UserId equals u.id
+                       select new
+                       {
+                           UserId = u.id,
+                           UserName = u.Name,
+                           CartId = c.Id,
+                           ProductName = p.ProductName,
+                           ProductPrice = p.ProductPrice,
+                           Discount = p.Discount,
+                           Quantity = c.Quantity,
+                           Img = p.productImgs.Count > 0 ? p.productImgs[0].ImagePath : "",
+                           Address = u.Address,
+                           Phone = u.PhoneNumber
+                       };
+
+            var data = await cart.Where(x => x.CartId == CartId).Select(x => new CartViewModel()
+            {
+                id = x.CartId,
+                UserName = x.UserName,
+                Discount = x.Discount,
+                ProductNane = x.ProductName,
+                ProductPrice = x.ProductPrice,
+                Quantity = x.Quantity,
+                ImgUrl = x.Img,
+                Address = x.Address,
+                Phone = x.Phone
+                
+            }).FirstOrDefaultAsync();
+
+            if (data != null)
+            {
+                return data;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<int> Update(UpdateCartRequest request)
+        {
+            var cart = await _context.Carts.Where(x => x.Id == request.id).FirstOrDefaultAsync();
+            if (cart == null) throw new BTL_KTPMException("Can not find product");
+
+            cart.ProductId = request.ProductId;
+            cart.Quantity = request.Quantity;
+            cart.Price = request.Price;
+            _context.Update(cart);
+            return await _context.SaveChangesAsync();
         }
     }
 }
