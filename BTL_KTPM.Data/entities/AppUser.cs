@@ -14,7 +14,7 @@ namespace BTL_KTPM.Data.entities
         public DateTime Dob { get; set; }
         public string Address { get; set; }
         public string sex { get; set; }
-        //public List<Cart> Carts { get; set; }
+        public List<Cart> Carts { get; set; }
         public List<Order> Orders { get; set; }
 
     }
