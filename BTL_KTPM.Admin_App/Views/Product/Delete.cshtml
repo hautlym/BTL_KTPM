@@ -1,0 +1,40 @@
+﻿@model BTL_KTPM.Application.Catalog.Products.Dtos.ProductDeleteRequest
+
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Xóa sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Xóa sản phẩm</li>
+    </ol>
+    <div style="margin: 20px 0;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Product">Danh sách sản phẩm</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <dl class="row">
+                        <dt class="col-sm-9">
+                            Bạn có muốn xóa sản phẩm có 
+                            @Html.DisplayNameFor(model => model.Id) : 
+                        </dt>
+                        <dd class="col-sm-3">
+                            @Html.DisplayFor(model => model.Id)
+                        </dd>
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="submit" value="Delete" class="btn btn-danger" /> 
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

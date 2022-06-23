@@ -1,4 +1,5 @@
 ﻿using BTL_KTPM.Application.Catalog.Categories.Dtos;
+using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Data.entities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace BTL_KTPM.Application.Catalog.Categories
     public interface IManageCategory
     {
         Task<List<CategoryViewModels>> GetAllCategory();
+        Task<PageResult<CategoryViewModels>> GetAlllPaging(GetCategoryRequest request);
         Task<int> Create(CreateCategoryRequest request);
         Task<int> Update(UpdateCategoryRequest request);
         Task<int> Delete(int CategoryId);

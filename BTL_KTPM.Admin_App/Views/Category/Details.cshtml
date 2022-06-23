@@ -1,0 +1,50 @@
+﻿@model BTL_KTPM.Application.Catalog.Categories.CategoryViewModels
+
+@{
+    ViewData["Title"] = "Thông tin danh mục";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Thông tin danh mục</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Thông tin danh mục </li>
+    </ol>
+    <div style="margin: 20px 0;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Category">Danh sách danh mục</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+
+                    <dl class="row">
+
+                        <dt class="col-sm-6">
+                            @Html.DisplayNameFor(model => model.CategoryName)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.CategoryName)
+                        </dd>
+                        <dt class="col-sm-6">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                    </dl>
+
+                    <div style="margin: 20px 0;">
+                        <a class="btn btn-success" @Html.ActionLink("Sửa thông tin", "Edit", new { id = @Model.Id })</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

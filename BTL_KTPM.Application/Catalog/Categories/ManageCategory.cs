@@ -1,5 +1,6 @@
 ﻿using BTL_KTPM.Application.Catalog.Categories.Dtos;
 using BTL_KTPM.Application.Catalog.Common;
+using BTL_KTPM.Application.Catalog.System.Dtos;
 using BTL_KTPM.Data.EF;
 using BTL_KTPM.Data.entities;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,31 @@ namespace BTL_KTPM.Application.Catalog.Categories
             }).ToListAsync();
             return data;
 
+        }
+
+        public async Task<PageResult<CategoryViewModels>> GetAlllPaging(GetCategoryRequest request)
+        {
+            var query = from c in _context.Categories
+                        select c;
+            if (!string.IsNullOrEmpty(request.keyword))
+            {
+                query = query.Where(x => x.CategoryName.Contains(request.keyword));
+            }
+            var totalRow = query.Count();
+            var data = await query.Skip((request.PageIndex - 1)*request.PageSize).Take(request.PageSize).Select(x => new CategoryViewModels()
+            {
+                Id = x.Id,
+                CategoryName = x.CategoryName,
+                Description = x.Description
+            }).ToListAsync();
+            var pageResult = new PageResult<CategoryViewModels>
+            {
+                TotalRecords = totalRow,
+                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+            return pageResult;
         }
 
         public async Task<CategoryViewModels> GetById(int categoryId)

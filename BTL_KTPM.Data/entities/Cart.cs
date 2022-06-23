@@ -13,10 +13,10 @@ namespace BTL_KTPM.Data.entities
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public int UserId { get; set; }
-        public  User Users { get; set; } 
-        //public Guid UserId { get; set; }
+        public  User Users { get; set; }
+        public Guid AppUserId { get; set; }
         public Product Product { get; set; }
         public DateTime DateCreated { get; set; }
-        //public AppUser AppUser { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

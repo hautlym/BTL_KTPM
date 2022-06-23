@@ -1,5 +1,7 @@
 ﻿using BTL_KTPM.Application.Catalog.Products;
 using BTL_KTPM.Application.Catalog.Products.Dtos;
+using BTL_KTPM.Application.Catalog.Products.ProductImgs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BTL_KTPM.BackendAPI.Controllers
@@ -30,6 +32,12 @@ namespace BTL_KTPM.BackendAPI.Controllers
             var product = await _publicProductService.getAllByCategoryId(request);
             return Ok(product);
         }
+        [HttpGet("paging")]
+        public async Task<IActionResult> Get([FromQuery] GetProductPagingRequest request)
+        {
+            var product = await _manageProductService.GetAllPaging(request);
+            return Ok(product);
+        }
         [HttpGet("productName")]
         public async Task<IActionResult> GetbyName([FromQuery] string name)
         {
@@ -51,7 +59,8 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] ProductCreateRequest request)
+
+        public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +75,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] ProductUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -87,6 +96,59 @@ namespace BTL_KTPM.BackendAPI.Controllers
                 return BadRequest();
 
             return Ok();
+        }
+        //Images
+        [HttpPost("{productId}/images")]
+        public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var imageId = await _manageProductService.AddImage(productId, request);
+            if (imageId == 0)
+                return BadRequest();
+
+            var image = await _manageProductService.GetImageById(imageId);
+
+            return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
+        }
+
+        [HttpPut("{productId}/images/{imageId}")]
+        public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _manageProductService.UpdateImage(imageId, request);
+            if (result == 0)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpDelete("{productId}/images/{imageId}")]
+        public async Task<IActionResult> RemoveImage(int imageId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _manageProductService.RemoveImage(imageId);
+            if (result == 0)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpGet("{productId}/images/{imageId}")]
+        public async Task<IActionResult> GetImageById(int productId, int imageId)
+        {
+            var image = await _manageProductService.GetImageById(imageId);
+            if (image == null)
+                return BadRequest("Cannot find product");
+            return Ok(image);
         }
     }
 }

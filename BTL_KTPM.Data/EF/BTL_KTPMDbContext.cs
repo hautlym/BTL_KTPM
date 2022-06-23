@@ -53,6 +53,7 @@ namespace BTL_KTPM.Data.EF
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<ProductImg> productImgs { get; set; }
+        public DbSet<AppUser> appUsers { get; set; }
         public DbSet<User> users { get; set; }
     }
 }

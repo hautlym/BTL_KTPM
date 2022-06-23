@@ -1,49 +1,221 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BTL_KTPM.WebMvc</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BTL_KTPM.WebMvc.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/reponsive.css">
+    <title>Trang chủ</title>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BTL_KTPM.WebMvc</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div class="container-fluid">
+        <div class="header">
+            <div class="top-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="header-icon">
+                                <ul class="d-flex">
+                                    <li class="icon"><a href=""><i class="fab fa-facebook-f"></i></a></li>
+                                    <li class="icon"><a href=""><i class="fab fa-instagram"></i></a></li>
+                                    <li class="icon"><a href=""><i class="fab fa-twitter"></i></a></li>
+                                    <li class="icon"><a href=""><i class="fab fa-youtube"></i></a></li>
+                                    <li class="icon"><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="header-contact">
+                                <ul class="d-flex justify-content-end">
+                                    <li class="contact">
+                                        <a href="" class="header-shop-map">
+                                            <i class="fas fa-map-marker-alt"></i> Hệ thống cửa hàng
+                                        </a>
+                                    </li>
+                                    <li class="contact">
+                                        <a href="" class="header-shop-phone">
+                                            <i class="fas fa-phone"></i> (+84)934 323 882
+                                        </a>
+                                    </li>
+                                    <li class="contact">
+                                        <a href="" class="header-shop-support">
+                                            <i class="fas fa-envelope"></i> support@suplo.vn
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            <div class="main-menu">
+                <div class="container">
+                    <div class="row">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <div class="container-fluid">
+                                <div class="logo">
+                                    <a href="index.html">
+                                        <img src="img/logo.png" alt="">
+                                    </a>
+                                </div>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse hide justify-content-center" id="navbarSupportedContent">
+                                    <ul class="navbar-nav  mb-2 mb-lg-0 justify-content-center">
+                                        <li class="nav-item">
+                                            <a class="nav-link active home" aria-current="page" href="index.html">Trang
+                                                chủ</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="shop.html">Sản phẩm</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="allnews.html">Tin
+                                                tức</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="contact.html">Liên
+                                                hệ</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="about.html">Giới
+                                                thiệu</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ul class="icon-nav justify-content-end d-flex">
+                                    <li>
+                                        <a class="icon-user" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-user-alt"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="icon-buy" href="cart.html">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            <div class="number-buy">0</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="responsive-navbar text-center hide an">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="search">
+                            <input type="text" placeholder="Tìm kiếm...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6 d-flex flex-column align-items-start res-left">
+                                <div class="res-home">
+                                    <a href=""><i class="fas fa-house-user"></i>Trang chủ</a>
+                                </div>
+                                <div class="resproducts">
+                                    <a href=""><i class="fas fa-cart-plus"></i>Sản phẩm</a>
+                                </div>
+                                <div class="res-contact">
+                                    <a href=""><i class="fas fa-map-marker-alt"></i>Liên hệ</a>
+                                </div>
+                                <div class="res-about">
+                                    <a href=""><i class="fas fa-address-card"></i>Giới thiệu</a>
+                                </div>
+                                <div class="about-us">
+                                    <a href=""><i class="fab fa-themeisle"></i>Về chúng tôi</a>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column align-items-start res-right">
+                                <div class="love">
+                                    <a href=""><i class="far fa-heart"></i>Yêu thích</a>
+                                </div>
+                                <div class="res-n">
+                                    <a href=""><i class="far fa-newspaper"></i>Tin tức</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            @RenderBody();
+        </div>
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-12">
+                            <img src="img/logo.png" alt="" class="footer-img">
+                            <div class="address">
+                                <i class="fas fa-home"></i> Số 1 Lương Yên, Q.Hai Bà Trưng, Hà Nội
+                            </div>
+                            <div class="phone-footer">
+                                <i class="fas fa-phone"></i> (+84)934 323 882
+                            </div>
+                            <div class="supports">
+                                <i class="far fa-envelope"></i> support@suplo.vn
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 cot2">
+                            <h4 class="title-col2">DỊCH VỤ KHÁCH HÀNG</h4>
+                            <p><a href="">Hướng dẫn đặt mua hàng</a></p>
+                            <p><a href="">Kinh nghiệm mua hàng</a></p>
+                            <p><a href="">Đối tác và đại lý</a></p>
+                            <p><a href="">Hình thức thanh toán</a></p>
+                            <p><a href="">Mua hàng và đổi trả</a></p>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 cot3">
+                            <h4 class="title-col3">HỖ TRỢ</h4>
+                            <p><a href="">Đổi trả</a></p>
+                            <p><a href="">Chính sách bảo hành</a></p>
+                            <p><a href="">Chính sách vận chuyển</a></p>
+                            <p><a href="">Điều khoản dịch vụ</a></p>
+                            <p><a href="">Chính sách quyền riêng tư</a></p>
+                        </div>
+                        <div class="col-lg-3 col-sm-12">
+                            <h4 class="title-col4">LIKE SUPLO TRÊN MẠNG XÃ HỘI</h4>
+                            <div class="col4-item">
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-youtube"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-google-plus-g"></i></a>
+                            </div>
+                            <h4 class="title-col4">ĐĂNG KÝ NHẬN TIN</h4>
+                            <div class="col4-input d-flex">
+                                <input placeholder="Nhập email của bạn..." type="text">
+                                <button><a href=""><i class="fab fa-telegram-plane"></i></a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-madeby text-center">
+                <p>Made by © 2021 Lê Văn Linh</p>
+            </div>
+        </div>
+        <div class="backtotop hide">
+            <i class="fas fa-arrow-up"></i>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - BTL_KTPM.WebMvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

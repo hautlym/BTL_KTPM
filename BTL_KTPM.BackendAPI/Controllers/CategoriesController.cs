@@ -24,6 +24,12 @@ namespace BTL_KTPM.BackendAPI.Controllers
             var categories = await _manageCategory.GetAllCategory();
             return Ok(categories);
         }
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery]GetCategoryRequest request)
+        {
+            var categories = await _manageCategory.GetAlllPaging(request);
+            return Ok(categories);
+        }
 
         [HttpGet("{CategoryId}")]
         public async Task<IActionResult> GetbyId(int CategoryId)
@@ -40,17 +46,17 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpPost("add_category")]
-        public async Task<IActionResult> Create([FromQuery] CreateCategoryRequest request)
+        public async Task<IActionResult> Create( CreateCategoryRequest request)
         {
             var result = await _manageCategory.Create(request);
             if (result == 0)
-                return BadRequest();
+                return BadRequest("Lỗi gì đó rồi");
             var category = await _manageCategory.GetById(result);
             return Created(nameof(GetbyId), category);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateCategoryRequest request)
+        public async Task<IActionResult> Update( UpdateCategoryRequest request)
         {
             var Result = await _manageCategory.Update(request);
             if (Result == 0)

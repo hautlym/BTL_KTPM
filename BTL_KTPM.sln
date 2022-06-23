@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTL_KTPM.WebMvc", "BTL_KTPM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTL_KTPM.Application", "BTL_KTPM.Application\BTL_KTPM.Application.csproj", "{1822C81C-6C00-41A7-A291-29384A2EA8E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTL_KTPM.Admin_App", "BTL_KTPM.Admin_App\BTL_KTPM.Admin_App.csproj", "{D7004C52-6BF3-4B80-BC59-C9EB1DF04876}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1822C81C-6C00-41A7-A291-29384A2EA8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1822C81C-6C00-41A7-A291-29384A2EA8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1822C81C-6C00-41A7-A291-29384A2EA8E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7004C52-6BF3-4B80-BC59-C9EB1DF04876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7004C52-6BF3-4B80-BC59-C9EB1DF04876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7004C52-6BF3-4B80-BC59-C9EB1DF04876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7004C52-6BF3-4B80-BC59-C9EB1DF04876}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

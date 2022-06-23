@@ -81,7 +81,7 @@ namespace BTL_KTPM.Application.Catalog.Products
                 }).ToListAsync();
             var pageResult = new PageResult<ProductViewModel>
             {
-                totalRecord = totalRow,
+                TotalRecords = totalRow,
                 Items = data
             };
             return pageResult;

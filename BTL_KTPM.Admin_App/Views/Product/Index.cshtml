@@ -1,0 +1,144 @@
+﻿@using BTL_KTPM.Application.Catalog.Common
+@using BTL_KTPM.Application.Catalog.Products.Dtos
+@model PageResult<ProductViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function(){
+        $('#msgAlert').fadeOut("slow");
+    },2000);
+
+</script>
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách sản hẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách sản phẩm </li>
+    </ol>
+
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a asp-action="Create" class="btn btn-success">Thêm sản phẩm</a>
+
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form asp-action="Index" asp-controller="Product" method="post">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                            <option>--Chọn danh mục--</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="col-md-2">
+                            <a class="btn btn-secondary " href="@Url.Action("Index","Product",new {keyword = ""})">Reset</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+
+            @if (ViewBag.SuscessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuscessMsg
+                </div>
+            }
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Giá sản phẩm
+                        </th>
+                        <th>
+                            Giá cũ
+                        </th>
+
+                        <th>
+                            Giảm giá
+                        </th>
+                        <th>
+                            Nhà sản xuất
+                        </th>
+                        <th>
+                            Loại sản phẩm
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{int i =1;}
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                                @{i++;}
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductOriginalPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Discount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProducerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CategoryName)
+                            </td>
+                            <td>
+                                 @Html.ActionLink("Sửa", "Edit", new { id = item.Id },new {@class= "btn btn-success"})
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.Id },new {@class= "btn btn-primary"})
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id },new {@class= "btn btn-danger"})
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+             @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+
+

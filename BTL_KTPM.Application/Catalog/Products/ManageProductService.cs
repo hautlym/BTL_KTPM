@@ -1,6 +1,8 @@
 ﻿using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.Products;
 using BTL_KTPM.Application.Catalog.Products.Dtos;
+using BTL_KTPM.Application.Catalog.Products.ProductImgs;
+using BTL_KTPM.Application.Catalog.System.Dtos;
 using BTL_KTPM.Data.EF;
 using BTL_KTPM.Data.entities;
 using Microsoft.AspNetCore.Http;
@@ -43,21 +45,18 @@ namespace BTL_KTPM.Application.Catalog.Products
             };
             if (request.ThumbnailImage != null)
             {
-                var listImg = new List<ProductImg>();
-                for(int i= 0;i<request.ThumbnailImage.Count; i++)
+                product.productImgs = new List<ProductImg>()
                 {
-                    var ProductImg = new ProductImg()
+                    new ProductImg()
                     {
-                        Caption = request.ProductName+""+i,
-                        FileSize = request.ThumbnailImage[i].Length,
-                        ImagePath = await this.SaveFile(request.ThumbnailImage[i]),
-                        IsDefault = i==0?true:false,
+                        Caption = "Thumbnail image",
                         DateCreated = DateTime.Now,
-                        SortOrder = i+1
-                    };
-                    listImg.Add(ProductImg);
-                }    
-                product.productImgs = listImg;
+                        FileSize = request.ThumbnailImage.Length,
+                        ImagePath = await this.SaveFile(request.ThumbnailImage),
+                        IsDefault = true,
+                        SortOrder = 1
+                    }
+                };
             }
 
             _context.products.Add(product);
@@ -84,42 +83,48 @@ namespace BTL_KTPM.Application.Catalog.Products
             throw new NotImplementedException();
         }
 
-        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request)
+        public async Task<ApiResult<PageResult<ProductViewModel>>> GetAllPaging(GetProductPagingRequest request)
         {
             var query = from product in _context.products
                         join c in _context.Categories on product.CategoryId equals c.Id
-                        select new { product, c };
-
+                        join p in _context.Producers on product.ProducerId equals p.ProducerId
+                        select new { product, c,p };
             if (!string.IsNullOrEmpty(request.keyword))
             {
                 query = query.Where(x => x.product.ProductName.Contains(request.keyword));
             }
-            if (request.CategoryId > 0)
+            if(request.CategoryId != null && request.CategoryId !=0)
             {
                 query = query.Where(x => x.c.Id == request.CategoryId);
             }
             int totalRow = await query.CountAsync();
-            var data = await query.Skip((request.PageIndex - 1) * request.PageIndex).Take(request.PageSize)
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
                 .Select(x => new ProductViewModel()
                 {
                     Id = x.product.Id,
                     ProductName = x.product.ProductName,
                     ProductDescription = x.product.ProductDescription,
                     ProductOriginalPrice = x.product.ProductOriginalPrice,
+                    ProductPrice = x.product.ProductPrice,
                     ProductTitle = x.product.ProductTitle,
                     CountComment = x.product.CountComment,
                     ProducerId = x.product.ProducerId,
+                    ProducerName = x.p.ProducerName,
+                    CategoryName = x.c.CategoryName,
                     IsNewProduct = x.product.IsNewProduct,
                     Discount = x.product.Discount,
                     CategoryId = x.product.CategoryId,
                     ThumbnailImage = x.product.productImgs
+                    
                 }).ToListAsync();
             var pageResult = new PageResult<ProductViewModel>
             {
-                totalRecord = totalRow,
-                Items = data
+                TotalRecords = totalRow,
+                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
             };
-            return pageResult;
+            return new ApiSuccessResult<PageResult<ProductViewModel>>(pageResult);
         }
 
         public async Task<int> Update(ProductUpdateRequest request)
@@ -180,6 +185,87 @@ namespace BTL_KTPM.Application.Catalog.Products
             //    throw new BTL_KTPMException("Can not find product");
             return products;
             
+        }
+
+        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
+        {
+            var productImage = new ProductImg()
+            {
+                Caption = request.Caption,
+                DateCreated = DateTime.Now,
+                IsDefault = request.IsDefault,
+                ProductId = productId,
+                SortOrder = request.SortOrder
+            };
+
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+            _context.productImgs.Add(productImage);
+            await _context.SaveChangesAsync();
+            return productImage.Id;
+        }
+
+        public async Task<int> RemoveImage(int imageId)
+        {
+            var productImage = await _context.productImgs.FindAsync(imageId);
+            if (productImage == null)
+                throw new BTL_KTPMException($"Cannot find an image with id {imageId}");
+            _context.productImgs.Remove(productImage);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
+        {
+            var productImage = await _context.productImgs.FindAsync(imageId);
+            if (productImage == null)
+                throw new BTL_KTPMException($"Cannot find an image with id {imageId}");
+
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+            _context.productImgs.Update(productImage);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
+        {
+            var image = await _context.productImgs.FindAsync(imageId);
+            if (image == null)
+                throw new BTL_KTPMException($"Cannot find an image with id {imageId}");
+
+            var viewModel = new ProductImageViewModel()
+            {
+                Caption = image.Caption,
+                DateCreated = image.DateCreated,
+                FileSize = image.FileSize,
+                Id = image.Id,
+                ImagePath = image.ImagePath,
+                IsDefault = image.IsDefault,
+                ProductId = image.ProductId,
+                SortOrder = image.SortOrder
+            };
+            return viewModel;
+        }
+
+        public async Task<List<ProductImageViewModel>> GetListImages(int productId)
+        {
+            return await _context.productImgs.Where(x => x.ProductId == productId)
+                .Select(i => new ProductImageViewModel()
+                {
+                    Caption = i.Caption,
+                    DateCreated = i.DateCreated,
+                    FileSize = i.FileSize,
+                    Id = i.Id,
+                    ImagePath = i.ImagePath,
+                    IsDefault = i.IsDefault,
+                    ProductId = i.ProductId,
+                    SortOrder = i.SortOrder
+                }).ToListAsync();
         }
     }
 
