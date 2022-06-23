@@ -11,5 +11,6 @@ namespace BTL_KTPM.Admin_App.Service
         Task<ApiResult<bool>> Delete(Guid id);
         Task<ApiResult<bool>> UpdateUser(Guid id, UserUpdateRequest request);
         Task<ApiResult<UserViewModels>> GetById(Guid id);
+        Task<ApiResult<bool>> RoleAssign(Guid id, RolesAssignRequest request);
     }
 }

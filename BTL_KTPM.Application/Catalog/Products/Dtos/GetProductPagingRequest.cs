@@ -9,7 +9,7 @@ namespace BTL_KTPM.Application.Catalog.Products.Dtos
 {
     public class GetProductPagingRequest:PagingRequestBase
     {
-        public string keyword { get; set; }
-        public int CategoryId { get; set; }
+        public string? keyword { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

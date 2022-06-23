@@ -33,9 +33,15 @@ namespace BTL_KTPM.Admin_App.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                ModelState.AddModelError("", "Vui lòng điền tài khoản hoặc mật khẩu");
+                return View();
             }
             var token = await _userApiClient.Authenticate(request);
+            if(token.ResultObj == null)
+            {
+                ModelState.AddModelError("", token.Message);
+                return View();
+            }    
             var userPrincipal = this.ValidateToken(token.ResultObj);
             var authProperties = new AuthenticationProperties
             {

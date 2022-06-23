@@ -7,7 +7,6 @@ namespace BTL_KTPM.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -21,11 +20,11 @@ namespace BTL_KTPM.BackendAPI.Controllers
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest();
             var resultToken = await _userService.Authencate(request);
             if (string.IsNullOrEmpty(resultToken.ResultObj))
             {
-                return BadRequest("Username or password incorrect");
+                return BadRequest(resultToken);
             }
             return Ok(resultToken);
         }
@@ -46,6 +45,10 @@ namespace BTL_KTPM.BackendAPI.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                BadRequest(ModelState);
+            }
             var products = await _userService.GetUserPaging(request);
             return Ok(products);
         }
@@ -75,19 +78,19 @@ namespace BTL_KTPM.BackendAPI.Controllers
             var user = await _userService.GetById(id);
             return Ok(user);
         }
-        //[HttpPut("{id}/roles")]
-        //public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
+        [HttpPut("{id}/roles")]
+        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RolesAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        //    var result = await _userService.RoleAssign(id, request);
-        //    if (!result.IsSuccessed)
-        //    {
-        //        return BadRequest(result);
-        //    }
-        //    return Ok(result);
-        //}
+            var result = await _userService.RoleAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
 
 

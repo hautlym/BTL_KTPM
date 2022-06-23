@@ -1,0 +1,78 @@
+﻿@model BTL_KTPM.Application.Catalog.Products.Dtos.ProductUpdateRequest
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Sửa sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Thêm sản phẩm</li>
+    </ol>
+    <div style="margin: 20px 0;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Product">Danh sách sản phẩm</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="ProductName" class="control-label"></label>
+                            <input asp-for="ProductName" class="form-control" />
+                            <span asp-validation-for="ProductName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductTitle" class="control-label"></label>
+                            <input asp-for="ProductTitle" class="form-control" />
+                            <span asp-validation-for="ProductTitle" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductOriginalPrice" class="control-label"></label>
+                            <input asp-for="ProductOriginalPrice" class="form-control" />
+                            <span asp-validation-for="ProductOriginalPrice" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductDescription" class="control-label"></label>
+                            <input asp-for="ProductDescription" class="form-control" />
+                            <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsNewProduct" /> @Html.DisplayNameFor(model => model.IsNewProduct)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CountComment" class="control-label"></label>
+                            <input asp-for="CountComment" class="form-control" />
+                            <span asp-validation-for="CountComment" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Discount" class="control-label"></label>
+                            <input asp-for="Discount" class="form-control" />
+                            <span asp-validation-for="Discount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProducerId" class="control-label"></label>
+                            <input asp-for="ProducerId" class="form-control" />
+                            <span asp-validation-for="ProducerId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label"></label>
+                            <input asp-for="CategoryId" class="form-control" />
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Lưu" class="btn btn-primary" style="margin:20px 0"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,36 @@
+﻿@model BTL_KTPM.Application.Catalog.Categories.Dtos.DeleteCategoryRequest
+
+@{
+    ViewData["Title"] = "Xóa danh mục sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Xóa danh mục sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Xóa danh mục sản phẩm </li>
+    </ol>
+    <div style="margin: 20px 0;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Category">Danh sách danh mục</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <dl class="row">
+                    <dt class="col-sm-6">
+                        Bạn cos muốn xóa danh mục sản phẩm có Id: 
+                        @Html.DisplayFor(model => model.id) không ?
+                    </dt>
+                    
+                </dl>
+
+                <form asp-action="Delete">
+                    <input asp-for="id" type="hidden" />
+                    <input type="submit" value="Xóa danh mục" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+

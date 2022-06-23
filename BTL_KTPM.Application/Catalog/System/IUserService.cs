@@ -17,5 +17,7 @@ namespace BTL_KTPM.Application.Catalog.System
         Task<ApiResult<PageResult<UserViewModels>>> GetUserPaging(GetUserPagingRequest request);
         Task<ApiResult<bool>> delete(Guid id);
         Task<ApiResult<UserViewModels>> GetById(Guid id);
+        public Task<ApiResult<bool>> RoleAssign(Guid id, RolesAssignRequest request);
+
     }
 }

@@ -37,10 +37,11 @@ namespace BTL_KTPM.Admin_App.Service
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClient.CreateClient();
+            string keyword;
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-
-            var response = await client.GetAsync($"/api/Users/paging?Keyword={request.Keyword}&PageIndex={request.PageIndex}&PageSize={request.PageSize}");
+            
+            var response = await client.GetAsync($"/api/Users/paging?PageIndex={request.PageIndex}&PageSize={request.PageSize}&Keyword={request.Keyword}");
             var body = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<ApiSuccessResult<PageResult<UserViewModels>>>(body);
             return users;
@@ -107,6 +108,25 @@ namespace BTL_KTPM.Admin_App.Service
                 return JsonConvert.DeserializeObject<ApiSuccessResult<UserViewModels>>(body);
 
             return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModels>>(body);
+        }
+
+        public async Task<ApiResult<bool>> RoleAssign(Guid id, RolesAssignRequest request)
+        {
+            var client = _httpClient.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/users/{id}/roles", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
     }
 }
