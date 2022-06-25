@@ -1,11 +1,13 @@
 ﻿using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.Products.Dtos;
 using BTL_KTPM.Application.Catalog.System.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace BTL_KTPM.Admin_App.Service.ProductApiClient
+namespace BTL_KTPM.ApiIntegration.Service.ProductApiClient
 {
     public class ProductApiClient : IProductApiClient
     {
@@ -63,6 +65,20 @@ namespace BTL_KTPM.Admin_App.Service.ProductApiClient
                 return true;
 
             return false;
+        }
+
+        public async Task<List<ProductViewModel>> GetAll()
+        {
+            var client = _httpClient.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"api/Product");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var myDeserializedObjList = (List<ProductViewModel>)JsonConvert.DeserializeObject(body, typeof(List<ProductViewModel>));
+                return (myDeserializedObjList);
+            }
+            throw new Exception(body);
         }
 
         public async Task<ProductViewModel> GetById(int id)

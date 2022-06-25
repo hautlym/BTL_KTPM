@@ -1,4 +1,4 @@
-﻿using BTL_KTPM.Admin_App.Service.ProducerApiClient;
+﻿using BTL_KTPM.ApiIntegration.Service.ProducerApiClient;
 using BTL_KTPM.Application.Catalog.Producers.Dtos;
 using Microsoft.AspNetCore.Mvc;
 

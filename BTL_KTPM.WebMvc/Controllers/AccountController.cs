@@ -9,27 +9,32 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace BTL_KTPM.Admin_App.Controllers
+namespace BTL_KTPM.WebMvc.Controllers
 {
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
-
-        public LoginController(IUserApiClient userApiClient, IConfiguration configuration)
+        public AccountController(IUserApiClient userApiClient, IConfiguration configuration)
         {
             _userApiClient = userApiClient;
             _configuration = configuration;
         }
-        
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Login()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Index(LoginRequest request)
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
+            return RedirectToAction("Index", "Home");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -37,18 +42,12 @@ namespace BTL_KTPM.Admin_App.Controllers
                 return View();
             }
             var token = await _userApiClient.Authenticate(request);
-            if(token.ResultObj == null)
+            if (token.ResultObj == null)
             {
-                ModelState.AddModelError("", token.Message);
-                return View();
-            }    
-            var userPrincipal = this.ValidateToken(token.ResultObj);
-            var kq = userPrincipal.FindFirst(ClaimTypes.Role).Value;
-            if (!kq.Contains("admin"))
-            {
-                ModelState.AddModelError("", "Tài khoản không tồn tại");
+                ModelState.AddModelError("", "Sai tài khoản hoặc mẩt khẩu");
                 return View();
             }
+            var userPrincipal = this.ValidateToken(token.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
@@ -60,6 +59,25 @@ namespace BTL_KTPM.Admin_App.Controllers
                        userPrincipal,
                        authProperties);
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userApiClient.RegisterUser(request);
+            if (!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", "Vui lòng kiểm tra thông tin");
+                return View();
+            }
+            return RedirectToAction("Login", "Account");
         }
         private ClaimsPrincipal ValidateToken(string jwtToken)
         {

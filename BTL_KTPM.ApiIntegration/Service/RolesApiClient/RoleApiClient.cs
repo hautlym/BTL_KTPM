@@ -1,8 +1,10 @@
 ﻿using BTL_KTPM.Application.Catalog.System.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
-namespace BTL_KTPM.Admin_App.Service
+namespace BTL_KTPM.ApiIntegration.Service.RolesApiClient
 {
     public class RoleApiClient : IRoleApiClient
     {

@@ -1,18 +1,20 @@
 ﻿using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.System.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace BTL_KTPM.Admin_App.Service
+namespace BTL_KTPM.ApiIntegration.Service.UserApiClient
 {
     public class UserApiClient : IUserApiClient
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UserApiClient( IHttpClientFactory httpClientFactory,IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClientFactory;
             _configuration = configuration;
@@ -21,10 +23,10 @@ namespace BTL_KTPM.Admin_App.Service
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
-            var Httpcontent = new StringContent(json,Encoding.UTF8,"application/json");
-            var client =  _httpClient.CreateClient();
+            var Httpcontent = new StringContent(json, Encoding.UTF8, "application/json");
+            var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response =await client.PostAsync("/api/Users/login", Httpcontent);
+            var response = await client.PostAsync("/api/Users/login", Httpcontent);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(await response.Content.ReadAsStringAsync());
@@ -40,13 +42,13 @@ namespace BTL_KTPM.Admin_App.Service
             string keyword;
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            
+
             var response = await client.GetAsync($"/api/Users/paging?PageIndex={request.PageIndex}&PageSize={request.PageSize}&Keyword={request.Keyword}");
             var body = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<ApiSuccessResult<PageResult<UserViewModels>>>(body);
             return users;
         }
-       
+
 
         public async Task<ApiResult<bool>> RegisterUser(RegisterRequest request)
         {

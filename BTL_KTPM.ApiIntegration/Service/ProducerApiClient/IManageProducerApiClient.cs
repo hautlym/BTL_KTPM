@@ -2,7 +2,7 @@
 using BTL_KTPM.Application.Catalog.Producers.Dtos;
 using BTL_KTPM.Application.Catalog.System.Dtos;
 
-namespace BTL_KTPM.Admin_App.Service.ProducerApiClient
+namespace BTL_KTPM.ApiIntegration.Service.ProducerApiClient
 {
     public interface IManageProducerApiClient
     {

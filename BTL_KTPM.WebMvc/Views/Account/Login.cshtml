@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="login-content">
+    <div class="title-login">ĐĂNG NHẬP TÀI KHOẢN</div>
+   
+    <div class="login-form">
+        <form action="/Account/Login" method="post">
+            <div asp-validation-summary ="ModelOnly" class="text-danger"></div>
+            <label for="">Tài khoản</label>
+            <input type="text" name="UserName" id="" placeholder="Nhập tài khoản" required>
+            <label for="">Mật khẩu</label>
+            <input type="password" name="Password" id="" placeholder="Nhập mật khẩu" required>
+            <input type="submit" value="ĐĂNG NHẬP" class="login-submit">
+        </form>
+    </div>
+    <a href="" class="forget-password">Quên mật khẩu ? </a>
+    <div class="regeiter-now">
+        Bạn chưa có tài khoản. Đăng ký <a href="./regeiter.html">tại đây </a>    
+    </div>
+</div> 
+

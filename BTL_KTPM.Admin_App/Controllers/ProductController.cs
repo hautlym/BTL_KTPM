@@ -1,5 +1,5 @@
-﻿using BTL_KTPM.Admin_App.Service.CategoryApiClient;
-using BTL_KTPM.Admin_App.Service.ProductApiClient;
+﻿using BTL_KTPM.ApiIntegration.Service.CategoryApiClient;
+using BTL_KTPM.ApiIntegration.Service.ProductApiClient;
 using BTL_KTPM.Application.Catalog.Products.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

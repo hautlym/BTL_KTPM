@@ -1,4 +1,4 @@
-﻿using BTL_KTPM.Admin_App.Service.CategoryApiClient;
+﻿using BTL_KTPM.ApiIntegration.Service.CategoryApiClient;
 using BTL_KTPM.Application.Catalog.Categories;
 using BTL_KTPM.Application.Catalog.Categories.Dtos;
 using Microsoft.AspNetCore.Mvc;

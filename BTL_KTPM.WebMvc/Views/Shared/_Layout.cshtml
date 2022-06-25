@@ -9,9 +9,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/reponsive.css">
-    <title>Trang chủ</title>
+    
+    
+    <link rel="stylesheet" href="~/css/login_css.css">
+     <link rel="stylesheet" href="~/css/regeiter.css">
+    <link rel="stylesheet" href="~/css/about.css"> 
+    @if(@ViewData["Title"] == "Details")
+    {
+        <link rel="stylesheet" href="~/css/infor_item.css">  
+    }
+    @if(@ViewData["Title"] == "Contact")
+    {
+        <link rel="stylesheet" href="~/css/contact.css">
+    }
+    else
+    {
+    <link rel="stylesheet" href="~/css/style.css">   
+        
+    }
+    
+    <link rel="stylesheet" href="~/css/reponsive.css">
+
+    <title>@ViewData["Title"]</title>
 </head>
 
 <body>
@@ -61,8 +80,8 @@
                         <nav class="navbar navbar-expand-lg navbar-light">
                             <div class="container-fluid">
                                 <div class="logo">
-                                    <a href="index.html">
-                                        <img src="img/logo.png" alt="">
+                                    <a href="@Url.Action("Index","Home")">
+                                        <img src="~/img/logo.png" alt="">
                                     </a>
                                 </div>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +90,7 @@
                                 <div class="collapse navbar-collapse hide justify-content-center" id="navbarSupportedContent">
                                     <ul class="navbar-nav  mb-2 mb-lg-0 justify-content-center">
                                         <li class="nav-item">
-                                            <a class="nav-link active home" aria-current="page" href="index.html">Trang
+                                            <a class="nav-link active home" aria-current="page" asp-action="Index" asp-controller="Home">Trang
                                                 chủ</a>
                                         </li>
                                         <li class="nav-item">
@@ -82,18 +101,42 @@
                                                 tức</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="contact.html">Liên
+                                            <a class="nav-link active" aria-current="page" asp-action="Contact" asp-controller="Home">Liên
                                                 hệ</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="about.html">Giới
+                                            <a class="nav-link active" aria-current="page" asp-action="About" asp-controller="Home">Giới
                                                 thiệu</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <ul class="icon-nav justify-content-end d-flex">
                                     <li>
-                                        <a class="icon-user" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-user-alt"></i></a>
+                                        <div class="header-top__menu--account ">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a href="" class="account_icon"> @User.Identity.Name </a> 
+                                            <ul class="header-top__menu--account--list">
+                                                <li class="header-top__menu--account-item">
+                                                    <form action="/Account/Logout" method="post">
+                                                        <button type="submit" value= "Đăng xuất" style="background-color: transparent;border: none;">
+                                                            <span>Đăng xuất</span>
+                                                        </button>
+                                                     </form>
+                                                </li>
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            
+                                            <a href="" class="account_icon">TÀI KHOẢN</a> 
+                                            <ul class="header-top__menu--account--list">
+                                                <li class="header-top__menu--account-item"><a href="@Url.Action("Login","Account")">ĐĂNG NHẬP</a> </li>
+                                                <li class="header-top__menu--account-item"><a href="@Url.Action("Register","Account")"> ĐĂNG KÝ</a></li>
+                                            </ul>
+                                        
+                                        }
+                                        </div>
                                     </li>
                                     <li>
                                         <a class="icon-buy" href="cart.html">

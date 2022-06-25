@@ -1,0 +1,37 @@
+﻿@using BTL_KTPM.Application.Catalog.System.Dtos
+@model RegisterRequest
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ <div class="regeiter-content">
+        <div class="title-login">ĐĂNG KÝ TÀI KHOẢN</div>
+        <div class="regeiter-form">
+            <form action="/Account/Register" method="post">
+                <div asp-validation-summary ="ModelOnly" class="text-danger"></div>
+                <label for="">Họ</label>
+                <input type="text" asp-for="FirstName" placeholder="Nhập họ" required>
+                <label for="">Tên</label>
+                <input type="text" asp-for="LastName"  placeholder="Nhập tên" required>
+                <label for="">Ngày sinh</label>
+                <input type="date" asp-for="Dob"  placeholder="Nhập ngày sinh" required>
+                <label for="">Giới tính</label>
+                <input type="text" asp-for="Sex"  placeholder="Nhập giới tính" required>
+                <label for="">Địa chỉ</label>
+                <input type="text" asp-for="Address"  placeholder="Nhập Địa chỉ" required>
+                <label for="">Số điện thoại</label>
+                <input type="text" asp-for="PhoneNumber" placeholder="Nhập số điện thoại" required>
+                <label for="">Email</label>
+                <input type="email" asp-for="Email" placeholder="Nhập địa chỉ Email" required>
+                <label for="">Tài Khoản</label>
+                <input type="text" asp-for="Username" placeholder="Nhập tài khoản" required>
+                <label for="">Mật khẩu</label>
+                <input type="password" asp-for="Password" placeholder="Nhập mật khẩu" required>
+                <label for="">Nhập lại mật khẩu</label>
+                <input type="password" asp-for="ConfirmPassword" placeholder="Nhập lại mật khẩu" required>
+                <input type="submit" value="Tạo tài khoản" class="login-submit">
+            </form>
+        </div>
+        <a href="@Url.Action("Login","Account")" class="link-login">Đăng nhập</a>
+    </div>
