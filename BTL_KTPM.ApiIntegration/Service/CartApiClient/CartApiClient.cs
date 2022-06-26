@@ -1,20 +1,25 @@
-﻿using BTL_KTPM.Application.Catalog.Categories;
-using BTL_KTPM.Application.Catalog.Categories.Dtos;
-using BTL_KTPM.Application.Catalog.Common;
+﻿using BTL_KTPM.Application.Catalog.Carts;
+using BTL_KTPM.Application.Catalog.Carts.Dtos;
 using BTL_KTPM.Application.Catalog.System.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
+namespace BTL_KTPM.ApiIntegration.Service.CartApiClient
 {
-    public class CategoriesApiClient : ICategoriesApiClient
+    public class CartApiClient : ICartApiClient
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoriesApiClient(IHttpClientFactory httpClientFactory,
+        public CartApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
         {
@@ -22,8 +27,7 @@ namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
             _httpContextAccessor = httpContextAccessor;
             _httpClient = httpClientFactory;
         }
-
-        public async Task<ApiResult<bool>> CreateCategory(CreateCategoryRequest request)
+        public async Task<ApiResult<bool>> CreateCart(CreateCartRequest request)
         {
             var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -32,7 +36,7 @@ namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"/api/Categories/add_category", httpContent);
+            var response = await client.PostAsync($"/api/Cart/add_cart", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
@@ -46,7 +50,7 @@ namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
             var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.DeleteAsync($"/api/Categories/{id}");
+            var response = await client.DeleteAsync($"/api/Cart/deleteCart/{id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return true;
@@ -54,51 +58,53 @@ namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
             return false;
         }
 
-        public async Task<ApiResult<List<CategoryViewModels>>> GetAll()
+        public async Task<List<CartViewModel>> GetAll()
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"api/Categories");
+            var response = await client.GetAsync($"api/Cart");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                var myDeserializedObjList = (List<CategoryViewModels>)JsonConvert.DeserializeObject(body, typeof(List<CategoryViewModels>));
-                return new ApiSuccessResult<List<CategoryViewModels>>(myDeserializedObjList);
+                var myDeserializedObjList = (List<CartViewModel>)JsonConvert.DeserializeObject(body, typeof(List<CartViewModel>));
+                return myDeserializedObjList;
             }
             throw new Exception(body);
         }
 
-        public async Task<PageResult<CategoryViewModels>> GetAllPaging(GetCategoryRequest request)
-        {
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
-            var client = _httpClient.CreateClient();
-            string keyword;
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-
-            var response = await client.GetAsync($"/api/Categories/paging?PageIndex={request.PageIndex}&PageSize={request.PageSize}&Keyword={request.keyword}");
-            var body = await response.Content.ReadAsStringAsync();
-            var category = JsonConvert.DeserializeObject<PageResult<CategoryViewModels>>(body);
-            return category;
-        }
-
-        public async Task<CategoryViewModels> GetById(int id)
+        public async Task<List<CartViewModel>> GetAllByUserId(Guid UserId)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/Categories/{id}");
+            var response = await client.GetAsync($"api/Cart/UserId/{UserId}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<CategoryViewModels>(body);
-
-            return JsonConvert.DeserializeObject<CategoryViewModels>(body);
+            {
+                var myDeserializedObjList = (List<CartViewModel>)JsonConvert.DeserializeObject(body, typeof(List<CartViewModel>));
+                return myDeserializedObjList;
+            }
+            throw new Exception(body);
         }
 
-        public async Task<bool> UpdateCategory(int id, UpdateCategoryRequest request)
+        public async Task<CartViewModel> GetById(int id)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClient.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.GetAsync($"/api/Cart/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<CartViewModel>(body);
+
+            return JsonConvert.DeserializeObject<CartViewModel>(body);
+        }
+
+        public async Task<bool> UpdateCart(int id, UpdateCartRequest request)
         {
             var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -109,7 +115,7 @@ namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/Categories", httpContent);
+            var response = await client.PutAsync($"/api/Cart", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return true;

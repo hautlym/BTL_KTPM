@@ -1,11 +1,13 @@
 ﻿using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.Producers.Dtos;
 using BTL_KTPM.Application.Catalog.System.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace BTL_KTPM.Admin_App.Service.ProducerApiClient
+namespace BTL_KTPM.ApiIntegration.Service.ProducerApiClient
 {
     public class ManageProducerApiClient : IManageProducerApiClient
     {

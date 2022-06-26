@@ -1,7 +1,8 @@
-using BTL_KTPM.Admin_App.Service;
-using BTL_KTPM.Admin_App.Service.CategoryApiClient;
-using BTL_KTPM.Admin_App.Service.ProducerApiClient;
-using BTL_KTPM.Admin_App.Service.ProductApiClient;
+using BTL_KTPM.ApiIntegration.Service.CategoryApiClient;
+using BTL_KTPM.ApiIntegration.Service.ProducerApiClient;
+using BTL_KTPM.ApiIntegration.Service.ProductApiClient;
+using BTL_KTPM.ApiIntegration.Service.RolesApiClient;
+using BTL_KTPM.ApiIntegration.Service.UserApiClient;
 using BTL_KTPM.Application.Validate;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;

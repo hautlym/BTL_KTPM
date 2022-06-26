@@ -1,6 +1,6 @@
 ﻿using BTL_KTPM.Application.Catalog.System.Dtos;
 
-namespace BTL_KTPM.Admin_App.Service
+namespace BTL_KTPM.ApiIntegration.Service.RolesApiClient
 {
     public interface IRoleApiClient
     {

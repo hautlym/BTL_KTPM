@@ -1,4 +1,4 @@
-﻿using BTL_KTPM.Admin_App.Service;
+﻿using BTL_KTPM.ApiIntegration.Service.UserApiClient;
 using BTL_KTPM.Application.Catalog.System.Dtos;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -43,6 +43,12 @@ namespace BTL_KTPM.Admin_App.Controllers
                 return View();
             }    
             var userPrincipal = this.ValidateToken(token.ResultObj);
+            var kq = userPrincipal.FindFirst(ClaimTypes.Role).Value;
+            if (!kq.Contains("admin"))
+            {
+                ModelState.AddModelError("", "Tài khoản không tồn tại");
+                return View();
+            }
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),

@@ -1,6 +1,7 @@
 ﻿using BTL_KTPM.Application.Catalog.Carts;
 using BTL_KTPM.Application.Catalog.Carts.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BTL_KTPM.BackendAPI.Controllers
 {
@@ -22,8 +23,8 @@ namespace BTL_KTPM.BackendAPI.Controllers
             return Ok(cart);
         }
 
-        [HttpGet("UserId")]
-        public async Task<IActionResult> GetByUserId(int UserId)
+        [HttpGet("UserId/{UserId}")]
+        public async Task<IActionResult> GetByUserId(Guid UserId)
         {
             var cart = await _manageCart.GetAllCartByUserId(UserId);
             if(cart.Count == 0)
@@ -48,7 +49,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpPost("add_cart")]
-        public async Task<IActionResult> Create([FromQuery] CreateCartRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateCartRequest request)
         {
             var result = await _manageCart.Create(request);
             if (result == 0)

@@ -14,7 +14,9 @@ namespace BTL_KTPM.Data.entities
         public string ShipAddress { get; set; }
         public string ShipEmail { get; set; }
         public string ShipNumberPhone { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public string ShipDescription { get; set; }
+        public Guid AppUserId { get; set; }
+        public List<Cart> ListCart { get; set; }
         public AppUser AppUser { get; set; }
     }
 

@@ -17,6 +17,6 @@ namespace BTL_KTPM.Data.entities
         public string Roles { get; set; }
         public bool Sex { get; set; }
         public string? PhoneNumber { get; set; }
-        public List<Cart> Carts { get; set; }
+        //public List<Cart> Carts { get; set; }
     }
 }

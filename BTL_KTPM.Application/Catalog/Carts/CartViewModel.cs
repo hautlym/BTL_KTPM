@@ -13,6 +13,7 @@ namespace BTL_KTPM.Application.Catalog.Carts
         public string ProductNane { get; set; }
         public int Quantity { get; set; }
         public double ProductPrice { get; set; }
+        public double ProductOriginal { get; set; }
         public string UserName { get; set; }
         public double Discount { get; set; }
         public string? ImgUrl { get; set; }

@@ -52,10 +52,10 @@ img {
     padding: 0 0 0 10px;
     width: 50px;
 }
-
+/*
 .icon-buy {
     color: #c89551 !important;
-}
+}*/
 
 /* top header contact */
 .contact {
@@ -305,8 +305,7 @@ background-size: 2000px 100%;
 
 .name p {
     margin-top: 25px !important;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .price {
@@ -318,7 +317,6 @@ background-size: 2000px 100%;
     font-size: 15px;
     font-weight: 600;
     margin-top: 25px !important;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .discount {
@@ -330,7 +328,6 @@ background-size: 2000px 100%;
     margin-top: 25px !important;
     font-size: 15px;
     font-weight: 500;
-    font-family: 'Open Sans', sans-serif;
     font-weight: 600;
 }
 
@@ -350,7 +347,6 @@ background-size: 2000px 100%;
 
 .total p {
     margin-top: 25px !important;
-    font-family: 'Open Sans', sans-serif;
     font-weight: 600;
 }
 
@@ -411,7 +407,6 @@ background-size: 2000px 100%;
     color: white;
     padding: 10px;
     border-radius: 5px;
-
     font-weight: bold;
 }
 
@@ -430,7 +425,6 @@ background-size: 2000px 100%;
 .totall p {
     font-size: 20px;
     font-weight: 700;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .total p {

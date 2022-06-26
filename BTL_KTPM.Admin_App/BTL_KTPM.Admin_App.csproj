@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BTL_KTPM.ApiIntegration\BTL_KTPM.ApiIntegration.csproj" />
     <ProjectReference Include="..\BTL_KTPM.Application\BTL_KTPM.Application.csproj" />
   </ItemGroup>
 

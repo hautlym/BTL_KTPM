@@ -1,7 +1,7 @@
 ﻿using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.System.Dtos;
 
-namespace BTL_KTPM.Admin_App.Service
+namespace BTL_KTPM.ApiIntegration.Service.UserApiClient
 {
     public interface IUserApiClient
     {

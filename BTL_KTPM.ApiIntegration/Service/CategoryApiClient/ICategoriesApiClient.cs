@@ -3,7 +3,7 @@ using BTL_KTPM.Application.Catalog.Categories.Dtos;
 using BTL_KTPM.Application.Catalog.Common;
 using BTL_KTPM.Application.Catalog.System.Dtos;
 
-namespace BTL_KTPM.Admin_App.Service.CategoryApiClient
+namespace BTL_KTPM.ApiIntegration.Service.CategoryApiClient
 {
     public interface ICategoriesApiClient
     {

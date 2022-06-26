@@ -45,6 +45,7 @@ namespace BTL_KTPM.Application.Catalog.System
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.Role,String.Join(";",roles)),
                 new Claim(ClaimTypes.Name, user.LastName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
