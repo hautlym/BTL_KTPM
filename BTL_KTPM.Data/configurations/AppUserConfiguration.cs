@@ -17,6 +17,7 @@ namespace BTL_KTPM.Data.configurations
             builder.Property(x => x.FirstName).HasMaxLength(255).IsRequired();
             builder.Property(x => x.LastName).HasMaxLength(255).IsRequired();
             builder.Property(x => x.Dob).IsRequired();
+            
         }
     }
 }

@@ -11,28 +11,101 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     
     <link rel="stylesheet" href="~/css/cart.css">
-    <link rel="stylesheet" href="~/css/login_css.css">
-     <link rel="stylesheet" href="~/css/regeiter.css">
+    <link rel="stylesheet" href="~/css/regeiter.css">
     <link rel="stylesheet" href="~/css/about.css"> 
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    
     @if(@ViewData["Title"] == "Details")
     {
         <link rel="stylesheet" href="~/css/infor_item.css">  
     }
-    @if(@ViewData["Title"] == "Contact")
+    else if(@ViewData["Title"] == "Danh sách sản phẩm")
+    {
+    <link rel="stylesheet" href="~/css/ProductList.css"> 
+        
+    }
+    else if(@ViewData["Title"] == "Contact")
     {
         <link rel="stylesheet" href="~/css/contact.css">
     }
     else
     {
     <link rel="stylesheet" href="~/css/style.css">   
+    <link rel="stylesheet" href="~/css/login_css.css">
         
     }
     
     <link rel="stylesheet" href="~/css/reponsive.css">
 
     <title>@ViewData["Title"]</title>
-</head>
+    <style>
+        .header-top__menu--account
+{
+    position: relative;
+    margin: 0 10px;
+    color: #000;
+    width: 100px;
+}
+.header-top__menu--shop a,
+.header-top__menu--account a
+{
+    text-decoration: none;
+    color: #000;
+}
+.header-top__menu--shop a:hover,
+.header-top__menu--account a:hover
+{
+    color: #916841;
+    cursor: pointer;
+}
+.header-top__menu--account:hover
+.header-top__menu--account--list
+{
+    display: block;
+}
+.header-top__menu--shop::after,
+.header-top__menu--account::after
+{
+    content: "";
+    width: 100%;
+    height: 15px;
+    left: 0;
+    bottom: -9px;
+    position: absolute;
+}
 
+.header-top__menu--account--list
+{
+    letter-spacing: normal;
+    z-index: 1;
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 140%;
+    width: 150%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 2;
+    border-radius: 3px;
+    font-weight: 400;
+    box-shadow: 0 0 3px #757575;
+    background-color: #fff;
+}
+.header-top__menu--account-item
+{
+    padding: 5px 10px;
+
+}
+.header-top__menu--account-item:hover
+{
+    color: #916841;
+    cursor: pointer;
+    background-color: #f7f7f7;
+}
+    </style>
+</head>
+<
 <body>
     <div class="container-fluid">
         <div class="header">
@@ -237,7 +310,7 @@
                             <h4 class="title-col4">ĐĂNG KÝ NHẬN TIN</h4>
                             <div class="col4-input d-flex">
                                 <input placeholder="Nhập email của bạn..." type="text">
-                                <button><a href=""><i class="fab fa-telegram-plane"></i></a></button>
+                                <button style="margin: 10px;"><a href=""><i class="fab fa-telegram-plane"></i></a></button>
                             </div>
                         </div>
                     </div>
@@ -260,6 +333,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+        
 </body>
 
 </html>

@@ -34,7 +34,7 @@ namespace BTL_KTPM.WebMvc.Controllers
 
             return View();
         }
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> AddToCart(int ProductId, int Quantity)
         {
             if (!User.Identity.IsAuthenticated)
