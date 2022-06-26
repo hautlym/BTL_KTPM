@@ -191,10 +191,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="buttons d-flex ">
-                                                                    <button class="addCart"
-                                                                        onclick="addToCart('sofa4','Sofa Gỗ Olio Xanh', 10,15600000,'img/sofa/sofa4/sofa4.1.webp',0)">
-                                                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                                                                    </button>
+                                                                    <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
+                                                                        <input type="hidden" name="ProductId" value="@item.Id">
+                                                                        <input type="hidden" name="Quantity" value="1">
+                                                                        <button type="submit" class="addCart">
+                                                                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                                        </button>
+                                                                    </form>
                                                                     <!-- <button class="buyNow">Mua ngay</button> -->
                                                             </div>
                                                             </div>
@@ -202,7 +205,7 @@
                                                         @if (item.Discount != 0)
                                                         {
                                                             <div class="discount">
-                                                                -20%
+                                                                -@item.Discount %
                                                             </div>
                                                         }
 
@@ -264,10 +267,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="buttons d-flex ">
-                                                                    <button class="addCart"
-                                                                        onclick="addToCart('sofa4','Sofa Gỗ Olio Xanh', 10,15600000,'img/sofa/sofa4/sofa4.1.webp',0)">
-                                                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                                                                    </button>
+                                                                    <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
+                                                                        <input type="hidden" name="ProductId" value="@item.Id">
+                                                                        <input type="hidden" name="Quantity" value="1">
+                                                                        <button type="submit" class="addCart">
+                                                                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                                        </button>
+                                                                    </form>
                                                                     <!-- <button class="buyNow">Mua ngay</button> -->
                                                             </div>
                                                             </div>
@@ -275,7 +281,7 @@
                                                         @if (item.Discount != 0)
                                                         {
                                                             <div class="discount">
-                                                                -20%
+                                                                -@item.Discount %
                                                             </div>
                                                         }
 
@@ -337,10 +343,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="buttons d-flex ">
-                                                                    <button class="addCart"
-                                                                        onclick="addToCart('sofa4','Sofa Gỗ Olio Xanh', 10,15600000,'img/sofa/sofa4/sofa4.1.webp',0)">
-                                                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                                                                    </button>
+                                                                    <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
+                                                                        <input type="hidden" name="ProductId" value="@item.Id">
+                                                                        <input type="hidden" name="Quantity" value="1">
+                                                                        <button type="submit" class="addCart">
+                                                                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                                        </button>
+                                                                    </form>
                                                                     <!-- <button class="buyNow">Mua ngay</button> -->
                                                             </div>
                                                             </div>
@@ -348,7 +357,7 @@
                                                         @if (item.Discount != 0)
                                                         {
                                                             <div class="discount">
-                                                                -20%
+                                                                -@item.Discount %
                                                             </div>
                                                         }
 
@@ -412,10 +421,14 @@
                                             </div>
                                         </div>
                                         <div class="buttons d-flex ">
-                                            <button class="addCart"
-                                                onclick="addToCart('sofa4','Sofa Gỗ Olio Xanh', 10,15600000,'img/sofa/sofa4/sofa4.1.webp',0)">
-                                                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                                            </button>
+                                            <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
+                                                <input type="hidden" name="ProductId" value="@item.Id">
+                                                <input type="hidden" name="Quantity" value="1">
+                                                <button type="submit" class="addCart">
+                                                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                </button>
+                                            </form>
+
                                             <!-- <button class="buyNow">Mua ngay</button> -->
                                     </div>
                                     </div>
@@ -423,7 +436,7 @@
                                 @if (item.Discount != 0)
                                 {
                                     <div class="discount">
-                                        -20%
+                                        -@item.Discount %
                                     </div>
                                 }
 

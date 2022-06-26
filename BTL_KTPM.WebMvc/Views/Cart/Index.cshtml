@@ -1,0 +1,140 @@
+﻿@using BTL_KTPM.Application.Catalog.Carts
+@model List<CartViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    string url = "http://192.168.2.102:7022/user-content/";
+    double total = 0;
+}
+<div class="banner">
+    <div class="inner">
+        <div class="container text-center">
+            <p class="title-heading">GIỎ HÀNG</p>
+            <p class="intro"><a href="">Trang chủ</a>/<a href="">Giỏ hàng</a></p>
+        </div>
+    </div>
+</div>
+<div class="cart">
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th>Hình ảnh</th>
+                    <th>Tên</th>
+                    <th>Giá gốc</th>
+                    <th>Giảm giá</th>
+                    <th>Số lượng</th>
+                    <th>Tạm tính</th>
+                </tr>
+            </thead>
+            <tbody class="tbody text-center">
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td data-label="" class="image"><img src="@Url.Content(url+item.ImgUrl)" alt=""></td>
+                            <td data-label="Tên" class="name"><p>@item.ProductNane</p></td>
+                            <td data-label="Giá gốc" class="price"><p>@String.Format("{0:n0}", item.ProductOriginal) VNĐ</p></td>
+                            <td data-label="Giảm giá" class="discount justify-content-end" style="color:#000;position:inherit"><p>@String.Format("{0:n0}", (item.ProductOriginal - item.ProductPrice)) VNĐ</p></td>
+                            <td data-label="Số lượng" class="quantity" style="padding-top: 30px;">
+
+                                <span class="Quantity_Product">@item.Quantity</span>
+
+                            </td>
+                            <td data-label="Tổng" class="total"><p>@String.Format("{0:n0}", item.ProductPrice*item.Quantity) VNĐ</p></td>
+                            <td data-label="">
+                                @*<form asp-action="DeleteToCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="CartId" value="@item.id">
+                                    <button type="submit" style="border:none;background-color:transparent;">
+                                    <i class="fas fa-times"></i>
+                                    </button>
+                                    </form>*@
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border:none;background-color:transparent;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+
+                                <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        @using (Html.BeginForm("DeleteToCart", "Cart", FormMethod.Post))
+                                        {
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Xóa đơn hàng</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Bạn có muốn xóa sản phẩm khỏi giỏ hàng ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" style="margin:0;padding:5px 20px;" data-bs-dismiss="modal">Đóng</button>
+
+
+                                                    <input type="hidden" name="CartId" value="@item.id">
+                                                    <button type="submit" class="btn btn-danger" style="margin:0;padding:5px 20px;">
+                                                        Xóa sản phẩm
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </td>
+
+
+
+
+                            @{
+                                total += item.ProductPrice;
+                            }
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="thanhtoan">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="totall text-center">
+                    <!-- <div class="">
+                        <div class="row">
+                            <div class="col-6"><p>Giá gốc : </p></div>
+                            <div class="col-6"><p class="giagoc"></p></div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-6"><p>Giảm giá : </p></div>
+                            <div class="col-6"><p class="giagoc"></p></div>
+                        </div>
+                    </div> -->
+                    <div class="">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Tổng tiền :
+                                <p></p>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="tongtien">@String.Format("{0:n0}", total) VNĐ </p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="checkout.html"><button class="checkout">Thanh toán</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/quantityProduct.js"></script>

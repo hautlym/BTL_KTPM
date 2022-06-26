@@ -1,5 +1,6 @@
 ﻿using BTL_KTPM.Application.Catalog.Carts.Dtos;
 using BTL_KTPM.Application.Catalog.Common;
+using BTL_KTPM.Application.Catalog.System.Dtos;
 using BTL_KTPM.Data.EF;
 using BTL_KTPM.Data.entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +25,7 @@ namespace BTL_KTPM.Application.Catalog.Carts
             var cart = new Cart()
             {
                 ProductId = request.ProductId,
-                Price = request.Price,
-                UserId = request.UserId,
+                AppUserId = request.UserId,
                 Quantity = request.Quantity,
             };
             _context.Carts.Add(cart);
@@ -45,10 +45,10 @@ namespace BTL_KTPM.Application.Catalog.Carts
         {
             var cart = from p in _context.products
                        join c in _context.Carts on p.Id equals c.ProductId
-                       join u in _context.users on c.UserId equals u.id
+                       join u in _context.appUsers on c.AppUserId equals u.Id
                        select new
                        {
-                           UserName = u.Name,
+                           UserName = u.FirstName+u.LastName,
                            CartId = c.Id,
                            ProductName = p.ProductName,
                            ProductPrice = p.ProductPrice,
@@ -56,6 +56,7 @@ namespace BTL_KTPM.Application.Catalog.Carts
                            Quantity = c.Quantity,
                            Img = p.productImgs.Count>0?p.productImgs[0].ImagePath : "",
                            Address = u.Address,
+                           ProductOriginal = p.ProductOriginalPrice,
                        };
 
             var data = await cart.Select(x => new CartViewModel()
@@ -65,6 +66,7 @@ namespace BTL_KTPM.Application.Catalog.Carts
                 Discount= x.Discount,
                 ProductNane = x.ProductName,
                 ProductPrice = x.ProductPrice,
+                ProductOriginal = x.ProductOriginal,
                 Quantity = x.Quantity,
                 ImgUrl = x.Img,
                 Address =x.Address
@@ -72,18 +74,19 @@ namespace BTL_KTPM.Application.Catalog.Carts
             return data;
         }
 
-        public async Task<List<CartViewModel>> GetAllCartByUserId(int UserId )
+        public async Task<List<CartViewModel>> GetAllCartByUserId(Guid UserId )
         {
             var cart = from p in _context.products
                        join c in _context.Carts on p.Id equals c.ProductId
-                       join u in _context.users on c.UserId equals u.id
+                       join u in _context.appUsers on c.AppUserId equals u.Id
                        select new
                        {
-                           UserId = u.id,
-                           UserName = u.Name,
+                           UserId = u.Id,
+                           UserName = u.FirstName+u.LastName,
                            CartId = c.Id,
                            ProductName = p.ProductName,
                            ProductPrice = p.ProductPrice,
+                           ProductOriginal = p.ProductOriginalPrice,
                            Discount = p.Discount,
                            Quantity = c.Quantity,
                            Img = p.productImgs.Count > 0 ? p.productImgs[0].ImagePath : "",
@@ -97,6 +100,7 @@ namespace BTL_KTPM.Application.Catalog.Carts
                 Discount = x.Discount,
                 ProductNane = x.ProductName,
                 ProductPrice = x.ProductPrice,
+                ProductOriginal = x.ProductOriginal,
                 Quantity = x.Quantity,
                 ImgUrl= x.Img,
                 Address = x.Address
@@ -109,11 +113,11 @@ namespace BTL_KTPM.Application.Catalog.Carts
 
             var cart = from p in _context.products
                        join c in _context.Carts on p.Id equals c.ProductId
-                       join u in _context.users on c.UserId equals u.id
+                       join u in _context.appUsers on c.AppUserId equals u.Id
                        select new
                        {
-                           UserId = u.id,
-                           UserName = u.Name,
+                           UserId = u.Id,
+                           UserName = u.FirstName+u.LastName,
                            CartId = c.Id,
                            ProductName = p.ProductName,
                            ProductPrice = p.ProductPrice,
