@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_KTPM.Data.Migrations
 {
     [DbContext(typeof(BTL_KTPMDbContext))]
-    [Migration("20220618071128_initialDB")]
+    [Migration("20220627043253_initialDB")]
     partial class initialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,6 +151,9 @@ namespace BTL_KTPM.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -160,16 +163,13 @@ namespace BTL_KTPM.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Carts");
                 });
@@ -236,6 +236,10 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DatePost")
                         .HasColumnType("datetime2");
 
@@ -274,6 +278,10 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ShipDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShipEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -293,37 +301,6 @@ namespace BTL_KTPM.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("BTL_KTPM.Data.entities.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetails");
-                });
-
             modelBuilder.Entity("BTL_KTPM.Data.entities.Producer", b =>
                 {
                     b.Property<int>("ProducerId")
@@ -332,11 +309,19 @@ namespace BTL_KTPM.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProducerId"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProducerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SĐT")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -585,23 +570,19 @@ namespace BTL_KTPM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BTL_KTPM.Data.entities.Order", null)
+                        .WithMany("Cart")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("BTL_KTPM.Data.entities.Product", "Product")
                         .WithMany("Carts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_KTPM.Data.entities.User", "Users")
-                        .WithMany("Carts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AppUser");
 
                     b.Navigation("Product");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Order", b =>
@@ -613,25 +594,6 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("BTL_KTPM.Data.entities.OrderDetail", b =>
-                {
-                    b.HasOne("BTL_KTPM.Data.entities.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BTL_KTPM.Data.entities.Product", "Product")
-                        .WithMany("OrderDetail")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Product", b =>
@@ -678,7 +640,7 @@ namespace BTL_KTPM.Data.Migrations
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Order", b =>
                 {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Producer", b =>
@@ -690,14 +652,7 @@ namespace BTL_KTPM.Data.Migrations
                 {
                     b.Navigation("Carts");
 
-                    b.Navigation("OrderDetail");
-
                     b.Navigation("productImgs");
-                });
-
-            modelBuilder.Entity("BTL_KTPM.Data.entities.User", b =>
-                {
-                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }

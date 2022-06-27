@@ -19,7 +19,7 @@ namespace BTL_KTPM.Admin_App.Controllers
             _configuration = configuration;
             _categoriesApiClient = categoriesApiClient;
         }
-        public async Task<IActionResult> Index(string keyword,int? categoryId, int PageIndex = 1, int PageSize = 10)
+        public async Task<IActionResult> Index(string keyword,int? categoryId, int PageIndex = 1, int PageSize = 5)
         {
             var request = new GetProductPagingRequest()
             {
@@ -44,7 +44,7 @@ namespace BTL_KTPM.Admin_App.Controllers
             return View(data.ResultObj);
         }
         [HttpGet]
-        public async Task<IActionResult> CreateAsync()
+        public async Task<IActionResult> Create()
         {
             var categories = await _categoriesApiClient.GetAll();
             ViewBag.Categories = categories.ResultObj.Select(x => new SelectListItem()
@@ -88,11 +88,30 @@ namespace BTL_KTPM.Admin_App.Controllers
                     ProductOriginalPrice = product.ProductOriginalPrice,
                     ProductTitle = product.ProductTitle,
                     Discount = product.Discount,
+                    IsNewProduct = product.IsNewProduct,
                     Id = product.Id,
                 };
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
+        }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit(ProductUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _productApiClient.UpdateProduct(request.Id, request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật thông tin thành công";
+                return RedirectToAction("Index");
+
+            }
+
+            ModelState.AddModelError("","Thay đổi không thành công");
+            return View(request);
         }
         [HttpGet]
         public IActionResult Delete(int id)
@@ -102,7 +121,12 @@ namespace BTL_KTPM.Admin_App.Controllers
                 Id = id,
             });
         }
-
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var result = await _productApiClient.GetById(id);
+            return View(result);
+        }
         [HttpPost]
         public async Task<IActionResult> Delete(ProductDeleteRequest request)
         {

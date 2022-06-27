@@ -1,4 +1,6 @@
-﻿using BTL_KTPM.ApiIntegration.Service.ProductApiClient;
+﻿using BTL_KTPM.ApiIntegration.Service.ContactApiClient;
+using BTL_KTPM.ApiIntegration.Service.ProductApiClient;
+using BTL_KTPM.Application.Catalog.Contacts.Dtos;
 using BTL_KTPM.WebMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,10 +11,12 @@ namespace BTL_KTPM.WebMvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductApiClient _productApiClient;
-        public HomeController(ILogger<HomeController> logger, IProductApiClient productApiClient)
+        private readonly IContactApiClient _contactApiClient;
+        public HomeController(ILogger<HomeController> logger, IProductApiClient productApiClient, IContactApiClient contactApiClient)
         {
             _logger = logger;
             _productApiClient = productApiClient;
+            _contactApiClient = contactApiClient;
         }
 
         public async Task<IActionResult> Index()
@@ -33,6 +37,16 @@ namespace BTL_KTPM.WebMvc.Controllers
         }
         public IActionResult Contact()
         {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Contact(CreateContactRequest request)
+        {
+            var kq =await _contactApiClient.CreateContact(request);
+            if (kq.IsSuccessed)
+            {
+                return View();
+            }
             return View();
         }
         public IActionResult Privacy()

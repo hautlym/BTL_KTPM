@@ -1,0 +1,35 @@
+﻿@model BTL_KTPM.Application.Catalog.Orders.Dtos.DeleteOrderRequest
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Hủy đơn hàng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Hủy đơn hàng</li>
+    </ol>
+    <div style="margin: 20px 0;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Order">Danh sách đơn hàng</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <dl class="row">
+                        <dt class="col-sm-12">
+                            bạn có muốn hủy đơn ?
+                        </dt>
+                        
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

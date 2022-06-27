@@ -63,6 +63,8 @@ namespace BTL_KTPM.Admin_App.Controllers
                     id = id,
                     ProducerName = result.ProducerName,
                     Description = result.Description,
+                    SĐT = result.SĐT,
+                    Address = result.Address,
                 };
                 return View(updateRequest);
             }

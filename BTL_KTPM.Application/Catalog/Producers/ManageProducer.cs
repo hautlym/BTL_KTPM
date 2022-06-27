@@ -23,7 +23,9 @@ namespace BTL_KTPM.Application.Catalog.Producers
             var producer = new Producer()
             {
                 ProducerName = request.ProducerName,
-                Description = request.Description
+                Description = request.Description,
+                SĐT = request.SĐT,
+                Address = request.Address,
             };
             _context.Producers.Add(producer);
             await _context.SaveChangesAsync();
@@ -44,7 +46,10 @@ namespace BTL_KTPM.Application.Catalog.Producers
             {
                 Id = x.ProducerId,
                 ProducerName = x.ProducerName,
-                Description = x.Description
+                Description = x.Description,
+                SĐT = x.SĐT,
+                Address= x.Address
+                
             }).ToListAsync();
             return data;
         }
@@ -62,7 +67,10 @@ namespace BTL_KTPM.Application.Catalog.Producers
             {
                 Id = x.ProducerId,
                 ProducerName = x.ProducerName,
-                Description = x.Description
+                Description = x.Description,
+                SĐT = x.SĐT,
+                Address = x.Address
+
             }).ToListAsync();
             var pageResult = new PageResult<ProducerViewModels>
             {
@@ -84,7 +92,9 @@ namespace BTL_KTPM.Application.Catalog.Producers
                 {
                     Id = producer.ProducerId,
                     ProducerName = producer.ProducerName,
-                    Description = producer.Description
+                    Description = producer.Description,
+                    SĐT= producer.SĐT,
+                    Address = producer.Address
                 };
                 return categoryViewModels;
             }
@@ -100,6 +110,8 @@ namespace BTL_KTPM.Application.Catalog.Producers
             if (producer == null) throw new BTL_KTPMException("Can not find producer");
             producer.ProducerName = request.ProducerName;
             producer.Description = request.Description;
+            producer.SĐT = request.SĐT;
+            producer.Address = request.Address;
             _context.Producers.Update(producer);
             return await _context.SaveChangesAsync();
         }

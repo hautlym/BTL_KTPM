@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace BTL_KTPM.Admin_App.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 

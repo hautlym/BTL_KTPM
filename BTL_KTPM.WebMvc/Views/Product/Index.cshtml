@@ -170,11 +170,12 @@
                 </div>
 
                 <div class="pagination justify-content-center d-flex">
-                    <div class="btn btn-prev align-items-center d-flex"><i class="fas fa-angle-double-left"></i></div>
+                     @await Component.InvokeAsync("Pager", Model)
+                    @*<div class="btn btn-prev align-items-center d-flex"><i class="fas fa-angle-double-left"></i></div>
                     <div class="btn btn-number" page="1">1</div>
                     <div class="btn btn-number" page="2">2</div>
                     <div class="btn btn-number" page="3">3</div>
-                    <div class="btn btn-next align-items-center d-flex"><i class="fas fa-angle-double-right"></i></div>
+                    <div class="btn btn-next align-items-center d-flex"><i class="fas fa-angle-double-right"></i></div>*@
                 </div>
             </div>
         </div>

@@ -16,11 +16,11 @@ namespace BTL_KTPM.WebMvc.Controllers
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
         }
-        public async Task<IActionResult> Index(int categoryId = 0, int SortOder = 4)
+        public async Task<IActionResult> Index(int categoryId = 0, int SortOder = 4,int pageIndex = 1)
         {
             var productRequest = new GetProductPagingRequest()
             {
-                PageIndex = 1,
+                PageIndex = pageIndex,
                 PageSize = 6,
                 keyword = "",
                 CategoryId = categoryId
@@ -54,6 +54,11 @@ namespace BTL_KTPM.WebMvc.Controllers
                 TopProduct = topProduct,
                 Category = category.ResultObj,
                 ListProduct = listProduct,
+                PageIndex = product.ResultObj.PageIndex,
+                PageSize = product.ResultObj.PageSize,
+                TotalRecords = product.ResultObj.TotalRecords,
+                PageCount = product.ResultObj.PageCount,
+                
             };
             return View(ProductIndexViewModels);
         }

@@ -87,7 +87,7 @@ namespace BTL_KTPM.ApiIntegration.Service.CartApiClient
                 var myDeserializedObjList = (List<CartViewModel>)JsonConvert.DeserializeObject(body, typeof(List<CartViewModel>));
                 return myDeserializedObjList;
             }
-            throw new Exception(body);
+            return null;
         }
 
         public async Task<CartViewModel> GetById(int id)

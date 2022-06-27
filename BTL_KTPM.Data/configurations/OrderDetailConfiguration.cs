@@ -15,8 +15,8 @@ namespace BTL_KTPM.Data.configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Quantity).IsRequired().HasDefaultValue(1);
-            builder.HasOne(x => x.Order).WithMany(x => x.OrderDetails).HasForeignKey(x => x.OrderId);
-            builder.HasOne(x => x.Product).WithMany(x => x.OrderDetail).HasForeignKey(x => x.ProductId);
+            //builder.HasOne(x=>x.Order).WithMany(x=>x.OrderDetail).HasForeignKey(x=>x.OrderId);
+            builder.HasOne(x=>x.Products).WithMany(x=>x.OrderDetails).HasForeignKey(x=>x.ProductId);
         }
     }
 }

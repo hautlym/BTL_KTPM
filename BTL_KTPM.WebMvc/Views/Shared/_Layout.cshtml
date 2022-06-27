@@ -17,7 +17,12 @@
     
     @if(@ViewData["Title"] == "Details")
     {
-        <link rel="stylesheet" href="~/css/infor_item.css">  
+        <link rel="stylesheet" href="~/css/infor_item.css">
+    }
+    else if(@ViewData["Title"] == "CheckOutView")
+    {
+    <link rel="stylesheet" href="~/css/checkout.css"> 
+        
     }
     else if(@ViewData["Title"] == "Danh sách sản phẩm")
     {
@@ -167,7 +172,7 @@
                                                 chủ</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="shop.html">Sản phẩm</a>
+                                            <a class="nav-link active" aria-current="page" asp-action="Index" asp-controller="Product">Sản phẩm</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link active" aria-current="page" href="allnews.html">Tin
@@ -198,6 +203,7 @@
                                                      </form>
                                                 </li>
                                                 <li class="header-top__menu--account-item"><a href="@Url.Action("Index","Cart")" style="padding: 0;"> Giỏ hàng</a></li>
+                                                <li class="header-top__menu--account-item"><a href="@Url.Action("CheckOutDetail","Cart")" style="padding: 0;"> Đơn hàng</a></li>
                                             </ul>
                                         }
                                         else

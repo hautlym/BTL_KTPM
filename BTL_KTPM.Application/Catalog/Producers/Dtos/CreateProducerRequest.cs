@@ -10,5 +10,7 @@ namespace BTL_KTPM.Application.Catalog.Producers.Dtos
     {
         public string ProducerName { get; set; }
         public string Description { get; set; }
+        public string SĐT { get; set; }
+        public string Address { get; set; }
     }
 }

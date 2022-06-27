@@ -1,0 +1,109 @@
+﻿@model BTL_KTPM.Application.Catalog.Orders.Dtos.OrderViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Thông tin đơn hàng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Thông tin sản phẩm </li>
+    </ol>
+    <div style="margin: 20px 0;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Order">Danh sách đơn hàng</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>                        
+                        <dl class="row">
+                            
+                            <dt class="col-sm-2">
+                                Ngày đặt hàng:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.OrderDate)
+                            </dd>
+                            <dt class="col-sm-2">
+                               tên người nhận:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ShipName)
+                            </dd>
+                            <dt class="col-sm-2">
+                                Địa chỉ:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ShipAddress)
+                            </dd>
+                            <dt class="col-sm-2">
+                                Email:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ShipEmail)
+                            </dd>
+                            <dt class="col-sm-2">
+                               Số điện thoại: 
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ShipNumberPhone)
+                            </dd>
+                            <dt class="col-sm-2">
+                                Ghi chú
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ShipDescription)
+                            </dd>
+                            
+                        </dl>
+
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    STT
+                                </th>
+                                <th>
+                                    Id sản phẩm
+                                </th>
+                                <th>
+                                    số lượng
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 1;
+                            }
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        @i
+                                        @{
+                                            i++;
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.ProductId
+                                    </td>
+                                    <td>
+                                        @item.Quantity
+                                    </td>
+                                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

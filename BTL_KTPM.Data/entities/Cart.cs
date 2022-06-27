@@ -12,7 +12,6 @@ namespace BTL_KTPM.Data.entities
         public int ProductId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        
         public Guid AppUserId { get; set; }
         public Product Product { get; set; }
         public DateTime DateCreated { get; set; }

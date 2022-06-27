@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string url = "http://192.168.2.102:7022/user-content/";
 }
 @section Scripts{
 <script>
@@ -77,6 +78,9 @@
                             STT
                         </th>
                         <th>
+                            Hình ảnh
+                        </th>
+                        <th>
                             Tên sản phẩm
                         </th>
                         <th>
@@ -107,14 +111,19 @@
                                 @i
                                 @{i++;}
                             </td>
+                             <td>
+                                <img src="@Url.Content(url+item.ThumbnailImage[0].ImagePath)" style="width: 100px;height: 100px;">
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ProductName)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProductPrice)
+                            <td >
+                                @String.Format("{0:n0}", item.ProductPrice) 
+                                
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ProductOriginalPrice)
+                                @String.Format("{0:n0}",item.ProductOriginalPrice)
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Discount)

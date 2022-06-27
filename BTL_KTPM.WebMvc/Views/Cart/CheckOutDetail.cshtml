@@ -1,0 +1,76 @@
+﻿@using BTL_KTPM.Application.Catalog.Orders.Dtos
+@model List<OrderViewModel>
+@{
+    ViewData["Title"] = "CheckOutDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="banner">
+    <div class="inner">
+        <div class="container text-center">
+            <p class="title-heading">Đơn hàng</p>
+            <p class="intro"><a href="">Trang chủ</a>/ <a href="">Giỏ hàng</a> Đơn hàng</p>
+        </div>
+    </div>
+</div>
+<div class="cart">
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th>Tên người nhận</th>
+                    <th>Địa chỉ</th>
+                    <th>SĐT</th>
+                    <th>Số lượng hàng</th>
+                    <th>Ngày đặt</th>
+                </tr>
+            </thead>
+            <tbody class="tbody text-center">
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-label="Tên" class="name"><p>@item.ShipName</p></td>
+                        <td data-label="Tên" class="name"><p>@item.ShipAddress</p></td>
+                        <td data-label="Tên" class="name"><p>@item.ShipNumberPhone</p></td>
+                        <td data-label="Tên" class="name"><p>@item.OrderDetails.Count</p></td>
+                        <td data-label="Tên" class="name"><p>@item.OrderDate</p></td>
+
+                        <td data-label="" class="delete">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border:none;background-color:transparent;">
+                                <i class="fas fa-times"></i>
+                            </button>
+
+                            <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    @using (Html.BeginForm("DeleteCheckOut", "Cart", FormMethod.Post))
+                                    {
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Xóa đơn hàng</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có muốn hủy đơn ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" style="margin:0;padding:5px 20px;" data-bs-dismiss="modal">Đóng</button>
+
+
+                                                <input type="hidden" name="OrderId" value="@item.Id">
+                                                <button type="submit" class="btn btn-danger" style="margin:0;padding:5px 20px;">
+                                                    Hủy đơn
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                        </td>
+                    </tr>
+                }
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>

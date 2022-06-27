@@ -144,15 +144,16 @@ namespace BTL_KTPM.Application.Catalog.Products
             product.CategoryId = request.CategoryId;
             if (request.ThumbnailImage != null)
             {
-                var thumbnailImage =await _context.productImgs.FirstOrDefaultAsync(x => x.IsDefault == true && x.Id == request.Id);
+                var thumbnailImage =await _context.productImgs.FirstOrDefaultAsync(x=>x.ProductId == request.Id);
                 if(thumbnailImage != null)
                 {
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
                     thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
-                    _context.productImgs.Update(thumbnailImage);
+                     _context.productImgs.Update(thumbnailImage);
                 }
                 
             }
+            _context.Update(product);
             return await _context.SaveChangesAsync();
         }
         public async Task<string> SaveFile(IFormFile file)

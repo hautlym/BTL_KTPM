@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_KTPM.Data.Migrations
 {
     [DbContext(typeof(BTL_KTPMDbContext))]
-    [Migration("20220625162056_editEntities")]
-    partial class editEntities
+    [Migration("20220627085603_orderDetails")]
+    partial class orderDetails
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,16 +160,11 @@ namespace BTL_KTPM.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Carts");
                 });
@@ -278,6 +273,10 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ShipDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShipEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -305,7 +304,7 @@ namespace BTL_KTPM.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -603,17 +602,9 @@ namespace BTL_KTPM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_KTPM.Data.entities.User", "Users")
-                        .WithMany("Carts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AppUser");
 
                     b.Navigation("Product");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Order", b =>
@@ -629,21 +620,17 @@ namespace BTL_KTPM.Data.Migrations
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.OrderDetail", b =>
                 {
-                    b.HasOne("BTL_KTPM.Data.entities.Order", "Order")
+                    b.HasOne("BTL_KTPM.Data.entities.Order", null)
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
-                    b.HasOne("BTL_KTPM.Data.entities.Product", "Product")
-                        .WithMany("OrderDetail")
+                    b.HasOne("BTL_KTPM.Data.entities.Product", "Products")
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Product", b =>
@@ -702,14 +689,9 @@ namespace BTL_KTPM.Data.Migrations
                 {
                     b.Navigation("Carts");
 
-                    b.Navigation("OrderDetail");
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("productImgs");
-                });
-
-            modelBuilder.Entity("BTL_KTPM.Data.entities.User", b =>
-                {
-                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }

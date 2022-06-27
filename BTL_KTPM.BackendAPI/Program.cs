@@ -1,6 +1,8 @@
 using BTL_KTPM.Application.Catalog.Carts;
 using BTL_KTPM.Application.Catalog.Categories;
 using BTL_KTPM.Application.Catalog.Common;
+using BTL_KTPM.Application.Catalog.Contacts;
+using BTL_KTPM.Application.Catalog.Orders;
 using BTL_KTPM.Application.Catalog.Producers;
 using BTL_KTPM.Application.Catalog.Products;
 using BTL_KTPM.Application.Catalog.System;
@@ -26,40 +28,41 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger eShop Solution", Version = "v1" });
+builder.Services.AddSwaggerGen(
+//    c =>
+//{
+//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger BTL_KTPM", Version = "v1" });
 
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      \r\n\r\nExample: 'Bearer 12345abcdef'",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
+//    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+//    {
+//        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
+//                      Enter 'Bearer' [space] and then your token in the text input below.
+//                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+//        Name = "Authorization",
+//        In = ParameterLocation.Header,
+//        Type = SecuritySchemeType.ApiKey,
+//        Scheme = "Bearer"
+//    });
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                  {
-                    {
-                      new OpenApiSecurityScheme
-                      {
-                        Reference = new OpenApiReference
-                          {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                          },
-                          Scheme = "oauth2",
-                          Name = "Bearer",
-                          In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                      }
-    }
-    );
-}
+//    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+//                  {
+//                    {
+//                      new OpenApiSecurityScheme
+//                      {
+//                        Reference = new OpenApiReference
+//                          {
+//                            Type = ReferenceType.SecurityScheme,
+//                            Id = "Bearer"
+//                          },
+//                          Scheme = "oauth2",
+//                          Name = "Bearer",
+//                          In = ParameterLocation.Header,
+//                        },
+//                        new List<string>()
+//                      }
+//    }
+//    );
+//}
 
                     );
 
@@ -77,9 +80,11 @@ builder.Services.AddTransient<IManageCategory, ManageCategory>();
 //builder.Services.AddTransient<RoleManager<AppUser>, RoleManager<AppUser>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IManagerUser, ManagerUser>();
+builder.Services.AddTransient<IManageContact, ManageContact>();
 builder.Services.AddTransient<IManageProducer, ManageProducer>();
 builder.Services.AddTransient<IManageCart, ManagerCart>();
 builder.Services.AddTransient<IRolesService, RolesService>();
+builder.Services.AddTransient<IManageOrder, ManageOrder>();
 builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
 
 builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

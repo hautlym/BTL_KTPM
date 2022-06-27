@@ -1,0 +1,124 @@
+﻿@using BTL_KTPM.Application.Catalog.Carts
+@model List<CartViewModel>
+@{
+    ViewData["Title"] = "CheckOutView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    string url = "http://192.168.2.102:7022/user-content/";
+    double total = 0;
+}
+<div class="banner">
+    <div class="inner">
+        <div class="container text-center">
+            <p class="title-heading">THANH TOÁN</p>
+            <p class="intro"><a href="">Trang chủ</a>/ <a href="">Giỏ hàng</a> /Thanh toán</p>
+        </div>
+    </div>
+</div>
+
+<div class="checkout" style="background-color:#fff">
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-7">
+                <p class="transport">
+                <p class="tran-heading">1.Thông tin giao hàng</p>
+                <div class="row">
+                    <form asp-action="CheckOut" asp-controller="Cart" method="post">
+
+                        <div class="col-12">
+                            <input type="name" name="ShipName" placeholder="Họ Tên">
+                        </div>
+                        <div class="col-12">
+                            <input type="number" name="ShipNumberPhone" placeholder="Số điện thoại">
+                        </div>
+                        <div>
+                            <input type="email" name="ShipEmail" placeholder="Email">
+                        </div>
+                        <div>
+                            <input type="text" name="ShipAddress" placeholder="Địa chỉ">
+                        </div>
+                        <div>
+                            <textarea name="ShipDescription" id="" cols="30" rows="10" placeholder="Ghi chú"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class=" btn">Đặt hàng</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+                </p>
+                <div class="payment" style="color:#000">
+                    <p class="pay-heading">2. Phương thức thanh toán </p>
+                    <div class="live d-flex align-items-center">
+                        <input type="radio" class="radio1" name="ok" checked="true">
+                        <i class="fas fa-truck"></i>
+                        <p>THANH TOÁN TRỰC TIẾP KHI NHẬN HÀNG</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <p class="order-heading">3. Đặt hàng </p>
+                <div class="order">
+                    @if (Model != null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="order-intro">
+                                <div class="row align-items-center">
+                                    <div class="col-3"><img src="@Url.Content(url+item.ImgUrl)" alt=""></div>
+                                    <div class="col-9">@item.ProductNane</div>
+                                </div>
+                            </div>
+                            <div class="price">
+                                <div class="row">
+                                    <div class="col-4">Giá:</div>
+                                    <div class="col-8 text-end">@String.Format("{0:n0}", item.ProductOriginal) VNĐ</div>
+                                </div>
+                            </div>
+                            <div class="soluong" style="margin:0;height:25px !important;">
+                                <div class="row">
+                                    <div class="col-4">Số lượng:</div>
+                                    <div class="col-8 text-end">@item.Quantity</div>
+                                </div>
+                            </div>
+                            <div class="discount">
+                                <div class="row">
+                                    <div class="col-4">Khuyến mại:</div>
+                                    <div class="col-8 text-end">@String.Format("{0:n0}", (item.ProductOriginal-item.ProductPrice)) VNĐ</div>
+                                </div>
+                            </div>
+                            <div class="tamtinh">
+                                <div class="row">
+                                    <div class="col-4">Tạm tính:</div>
+                                    <div class="col-8 text-end order-price">@String.Format("{0:n0}", item.ProductPrice) VNĐ</div>
+                                </div>
+                            </div>
+
+                            total += item.ProductPrice;
+                        }
+                    }
+
+
+                </div>
+            </div>
+            <hr>
+            <div class="total" style="color:#000 ; ">
+                <div class="row">
+                    <div class="col-4" style="font-size:20px;">Tổng cộng:</div>
+                    <div class="col-8 text-end tongtatca" style="font-size:20px;">@String.Format("{0:n0}", total) VNĐ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

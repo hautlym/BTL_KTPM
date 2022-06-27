@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_KTPM.Data.Migrations
 {
     [DbContext(typeof(BTL_KTPMDbContext))]
-    [Migration("20220625172346_editCart")]
-    partial class editCart
+    [Migration("20220627101002_editOrderDetail")]
+    partial class editOrderDetail
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -273,6 +273,10 @@ namespace BTL_KTPM.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ShipDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShipEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -303,8 +307,8 @@ namespace BTL_KTPM.Data.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -622,15 +626,15 @@ namespace BTL_KTPM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_KTPM.Data.entities.Product", "Product")
-                        .WithMany("OrderDetail")
+                    b.HasOne("BTL_KTPM.Data.entities.Product", "Products")
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
 
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BTL_KTPM.Data.entities.Product", b =>
@@ -689,7 +693,7 @@ namespace BTL_KTPM.Data.Migrations
                 {
                     b.Navigation("Carts");
 
-                    b.Navigation("OrderDetail");
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("productImgs");
                 });

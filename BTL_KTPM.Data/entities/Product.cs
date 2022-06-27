@@ -19,7 +19,7 @@ namespace BTL_KTPM.Data.entities
         public double Discount { get; set; }
         public int ProducerId { get; set; }
         public int CategoryId { get; set; }
-        public List<OrderDetail> OrderDetail { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
         public List<Cart> Carts { get; set; }
         public Producer Producers { get; set; }
         public Category category { get; set; }

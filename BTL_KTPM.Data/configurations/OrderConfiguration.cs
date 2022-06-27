@@ -17,6 +17,7 @@ namespace BTL_KTPM.Data.configurations
             builder.Property(x=>x.ShipAddress).IsRequired();
             builder.Property(x => x.ShipNumberPhone).IsRequired();
             builder.Property(x => x.ShipName).IsRequired();
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.AppUserId);
             
         }
     }
