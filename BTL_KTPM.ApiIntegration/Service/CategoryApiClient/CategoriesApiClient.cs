@@ -69,7 +69,7 @@ namespace BTL_KTPM.ApiIntegration.Service.CategoryApiClient
                 var myDeserializedObjList = (List<CategoryViewModels>)JsonConvert.DeserializeObject(body, typeof(List<CategoryViewModels>));
                 return new ApiSuccessResult<List<CategoryViewModels>>(myDeserializedObjList);
             }
-            throw new Exception(body);
+            return null;
         }
 
         public async Task<PageResult<CategoryViewModels>> GetAllPaging(GetCategoryRequest request)

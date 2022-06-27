@@ -67,7 +67,7 @@ namespace BTL_KTPM.ApiIntegration.Service.ProducerApiClient
                 var myDeserializedObjList = (List<ProducerViewModels>)JsonConvert.DeserializeObject(body, typeof(List<ProducerViewModels>));
                 return new ApiSuccessResult<List<ProducerViewModels>>(myDeserializedObjList);
             }
-            throw new Exception(body);
+            return null;
         }
 
         public async Task<PageResult<ProducerViewModels>> GetAllPaging(GetProducerRequest request)

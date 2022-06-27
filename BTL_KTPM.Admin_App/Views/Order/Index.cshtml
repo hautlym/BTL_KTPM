@@ -1,0 +1,123 @@
+﻿@using BTL_KTPM.Application.Catalog.Common
+@using BTL_KTPM.Application.Catalog.Orders.Dtos
+@model PageResult<OrderViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function(){
+        $('#msgAlert').fadeOut("slow");
+    },2000);
+
+</script>
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách đơn hàng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách đơn hàng </li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form asp-action="Index" asp-controller="Product" method="post">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="col-md-2">
+                            <a class="btn btn-secondary " href="@Url.Action("Index","Product",new {keyword = ""})">Reset</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+
+            @if (ViewBag.SuscessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuscessMsg
+                </div>
+            }
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            Tên người nhận
+                        </th>
+                        <th>
+                            Địa chỉ
+                        </th>
+                        <th>
+                            SĐT
+                        </th>
+                        <th>
+                            Ngày đặt
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                                @{
+                                    i++;
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipNumberPhone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDate)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.Id },new {@class= "btn btn-primary"})
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id },new {@class= "btn btn-danger"})
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+

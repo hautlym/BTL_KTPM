@@ -1,8 +1,184 @@
-﻿
+﻿@model ProductIndexModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    string url = "http://192.168.2.102:7022/user-content/";
+}
+<style>
+    a{
+        color: #000;
+       
+    }
+    a:hover{
+        color: #c89551;
+       
+    }
+</style>
+<div class="banner">
+    <div class="inner">
+        <div class="container text-center">
+            <p class="title-heading">SẢN PHẨM</p>
+            <p class="intro"><a href="@Url.Action("Index","Home")">Trang chủ</a>/ <a href="shop.html">Sản phẩm</a></p>
+        </div>
+    </div>
+</div>
+<div class="shop">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                <div class="filter">
+                    <div class="loaihang">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Loại sản phẩm
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li class="all-sp">
+                                                <a href="@Url.Action("Index","Product")" >
+                                                    Tất cả
+                                                </a>
+                                            </li>
 
-<h1>Index</h1>
+                                            @foreach (var item in Model.Category)
+                                            {
+                                            <li class="checkban">
+
+                                                <a href="@Url.Action("Index","Product", new {categoryId = @item.Id})">
+                                                    @item.CategoryName
+                                                </a>
+
+
+                                            </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="loctheogia">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Mức giá
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body text-center">
+                                        <div class="ranger-slider">
+                                            <div id="slider-range"></div>
+                                            <div class="price-filter d-flex align-items-center justify-content-center">
+                                                <p>Giá:</p><strong></strong> <span id="slider-range-value1"></span><span>-</span><strong></strong> <span id="slider-range-value2"></span>
+                                            </div>
+                                        </div>
+                                        <button class="button-filter">Lọc</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+                <div class="selling-products">
+                    <p class="selling-title">Sản phẩm nổi bật</p>
+                    <hr>
+                                    @foreach (var item in Model.TopProduct)
+                                    {
+                        <a href="detail1.html">
+                            <div class="row">
+                                <div class="col-5 ">
+                                    <img src="@Url.Content(@url+@item.ThumbnailImage[0].ImagePath)" alt="">
+                                </div>
+                                <div class="col-7">
+                                    <div class="selling-name">@item.ProductName</div>
+                                    <div class="selling-price">@String.Format("{0:n0}", item.ProductPrice) VNĐ</div>
+                                    <div class="selling-star">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                                    }
+
+
+                </div>
+            </div>
+            <div class="col-lg-9 col-12">
+                <div class="boloc d-flex">
+                    <p class="giacao"><a href="@Url.Action("Index","Product",new {SortOder = 1})"><i class="fas fa-sort-amount-up"></i>Giá cao đến thấp </a> </p>
+                    <p class="giathap"><a href="@Url.Action("Index","Product",new {SortOder = 2})"><i class="fas fa-sort-amount-down-alt"></i>Giá thấp đến cao</a></p>
+                    @*<p class="xemnhieu"><a href="@Url.Action("Index","Product",new {SortOder = 3})"><i class="fas fa-eye"></i>Xem nhiều</a></p>*@
+                </div>
+                <div class="trang1 trang">
+                    <div class="row">
+                                        @foreach (var item in Model.ListProduct)
+                                        {
+                            <div class="col-lg-4 col-md-6  nopadding ban">
+                                <div class="product">
+                                    <a href="detail3.html">
+                                        <img src="@Url.Content(@url+@item.ThumbnailImage[0].ImagePath)" alt="" class="product-img">
+                                        <div class="product-info">
+                                            <p class="name-product text-center">@item.ProductName</p>
+                                            <div class="price-product text-center d-flex align-items-center">
+                                                <p class="price">@String.Format("{0:n0}", item.ProductPrice) VNĐ</p>
+                                                                @if (item.Discount != 0)
+                                                                {
+                                                    <p class="root-price">@String.Format("{0:n0}", item.ProductOriginalPrice) VNĐ</p>
+
+                                                                }
+                                            </div>
+                                            <div class="rate d-flex">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <div class="rate-number">
+                                                    <p>@item.CountComment lượt xem</p>
+                                                </div>
+                                            </div>
+                                            <div class="buttons d-flex ">
+                                                <button class="addCart" onclick="addToCart('b3','Bàn Narro Black Side', 10,2200000, 'img/ban/ban3/ban3.1.webp',300000)"><i class="fas fa-cart-plus"></i>   Thêm vào giỏ</button>
+                                                <!-- <button class="buyNow">Mua ngay</button> -->
+                                        </div>
+                                        </div>
+                                    </a>
+                                                    @if (item.Discount != 0)
+                                                    {
+                                        <div class="discount">
+                                            -@item.Discount%
+                                        </div>
+                                                    }
+
+                                </div>
+                            </div>
+                                        }
+                    </div>
+                </div>
+
+                <div class="pagination justify-content-center d-flex">
+                     @await Component.InvokeAsync("Pager", Model)
+                    @*<div class="btn btn-prev align-items-center d-flex"><i class="fas fa-angle-double-left"></i></div>
+                    <div class="btn btn-number" page="1">1</div>
+                    <div class="btn btn-number" page="2">2</div>
+                    <div class="btn btn-number" page="3">3</div>
+                    <div class="btn btn-next align-items-center d-flex"><i class="fas fa-angle-double-right"></i></div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

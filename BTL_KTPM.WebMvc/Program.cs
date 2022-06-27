@@ -1,4 +1,7 @@
 using BTL_KTPM.ApiIntegration.Service.CartApiClient;
+using BTL_KTPM.ApiIntegration.Service.CategoryApiClient;
+using BTL_KTPM.ApiIntegration.Service.ContactApiClient;
+using BTL_KTPM.ApiIntegration.Service.OrderApaiClient;
 using BTL_KTPM.ApiIntegration.Service.ProductApiClient;
 using BTL_KTPM.ApiIntegration.Service.UserApiClient;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,6 +15,9 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<ICartApiClient, CartApiClient>();
+builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
+builder.Services.AddTransient<IContactApiClient, ContactApiClient>();
+builder.Services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

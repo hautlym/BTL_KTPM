@@ -41,26 +41,29 @@
                 </div>
                 <div class="col-lg-9">
                     <p class="content">Nội dung liên hệ</p>
+                    
                     <div class="inputs">
-                        <div class="name">
+                        <form action="/Home/Contact" method="post">
+                        <div class="name" >
                             Họ tên
-                            <input type="text">
+                            <input type="text" name="Name">
                         </div>
-                        <div class="email">
+                        <div class="email" >
                             Email
-                            <input type="text">
+                            <input type="text" name="Email">
                         </div>
                         <div class="title">
                             Tiêu đề
-                            <input type="text">
+                            <input type="text" name="NumberPhone">
                         </div>
-                        <div class="message">
+                        <div class="message" >
                             Tin nhắn
-                            <textarea name="" id="textarea" cols="30" rows="10"></textarea>
+                            <input type="text"  id="textarea" cols="30" rows="10" name="Message"></input>
                         </div>
                         <div class="text-center">
-                            <button class="btn">Gửi</button>
+                            <button type="submit" class="btn">Gửi</button>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>

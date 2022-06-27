@@ -16,8 +16,6 @@ namespace BTL_KTPM.Data.configurations
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.Product).WithMany(x => x.Carts).HasForeignKey(x => x.ProductId);
             builder.HasOne(x => x.AppUser).WithMany(x => x.Carts).HasForeignKey(x => x.AppUserId);
-            //builder.HasOne(x=>x.Order).WithMany(x=>x.ListCart).HasForeignKey(x => x.OrderId);
-            //builder.HasOne(x => x.Users).WithMany(x => x.Carts).HasForeignKey(x => x.UserId);
         }
     }
 }

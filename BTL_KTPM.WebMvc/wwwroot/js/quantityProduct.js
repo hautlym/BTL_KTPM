@@ -1,19 +1,21 @@
-const quantity = document.querySelector(".Quantity_Product");
+const quantity = document.getElementById("Quantity_Product");
 const Add = document.querySelector(".Add_Quantity_Product");
 const Minus = document.querySelector(".Minsus_Quantity_Product");
-var Value = quantity.innerHTML;
-console.log(Value);
-Add.addEventListener("click",(e)=>{
-    Value++;
-    quantity.innerHTML = Value;
+var kq = quantity.value
+console.log(kq);
+console.log([quantity]);
+Add.addEventListener("click", (e) => {
+    e.preventDefault
+    kq++;
+    quantity.value=kq;
 })
-Minus.addEventListener("click",(e)=>{
-    if(Value == 1){
-        Value = 1
-    }
-    else{
-        Value--;
-    }
-    
-    quantity.innerHTML = Value;
+Minus.addEventListener("click", (e) => {
+    e.preventDefault
+   if(kq==1){
+    kq=1
+   }
+   else{
+    kq--;
+   }
+   quantity.value=kq;
 })

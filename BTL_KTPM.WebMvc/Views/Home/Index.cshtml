@@ -5,7 +5,9 @@
 }
 @{
     string url = "http://192.168.2.102:7022/user-content/";
+    
 }
+
 <div class="buy-success d-flex justify-content-center align-items-center hide">
     <p>Đặt hàng thành công</p>
 </div>
@@ -191,6 +193,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="buttons d-flex ">
+                                                                    
                                                                     <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
                                                                         <input type="hidden" name="ProductId" value="@item.Id">
                                                                         <input type="hidden" name="Quantity" value="1">
@@ -582,7 +585,7 @@
             <p class="register-text">Đăng ký với chúng tôi để nhận thông tin mới nhất về khuyến mãi, các sản phẩm mới và tin tức bạn cần. Nhập email tại đây</p>
             <div class="email">
                 <input type="text" class="email-dk" placeholder="Email của bạn">
-                <button class="email-btn">Gửi</button>
+                <button class="email-btn" style="/* margin-top: 10px; */margin: 10px;">Gửi</button>
             </div>
         </div>
     </div>

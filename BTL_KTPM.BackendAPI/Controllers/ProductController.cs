@@ -60,7 +60,6 @@ namespace BTL_KTPM.BackendAPI.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)

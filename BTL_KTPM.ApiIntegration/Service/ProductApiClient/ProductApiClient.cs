@@ -109,7 +109,7 @@ namespace BTL_KTPM.ApiIntegration.Service.ProductApiClient
 
                 return product;
             }
-            throw new Exception(body);
+            return null;
         }
 
         public async Task<bool> UpdateProduct(int id, ProductUpdateRequest request)
@@ -130,7 +130,7 @@ namespace BTL_KTPM.ApiIntegration.Service.ProductApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "ThumbnailImage", request.ThumbnailImage.FileName);
             }
-
+            requestContent.Add(new StringContent(request.Id.ToString()), "Id");
             requestContent.Add(new StringContent(request.ProductName.ToString()), "ProductName");
             requestContent.Add(new StringContent(request.ProductTitle.ToString()), "ProductTitle");
             requestContent.Add(new StringContent(request.ProductOriginalPrice.ToString()), "ProductOriginalPrice");

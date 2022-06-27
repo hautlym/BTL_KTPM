@@ -8,5 +8,6 @@ namespace BTL_KTPM.WebMvc.Models
         public List<ProductViewModel> DiscountProduct { get; set; }
         public List<ProductViewModel> PopularProduct { get; set; }
         public List<ProductViewModel> ProductInShop { get; set; }
+        
     }
 }

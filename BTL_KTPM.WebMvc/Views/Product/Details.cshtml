@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-   string url = "http://192.168.2.102:7022/user-content/";
+    string url = "http://192.168.2.102:7022/user-content/";
 }
 <div class="container-fluid">
 
@@ -33,7 +33,7 @@
                 <div class="col-lg-4">
                     <div class="main-info">
                         <div class="product-info">
-                            <p class="name-product">@Model.ProductDeltails.ProducerName</p>
+                            <p class="name-product">@Model.ProductDeltails.ProductName</p>
                             <div class="price-product text-center d-flex align-items-center">
                                 <p class="price">@String.Format("{0:n0}", Model.ProductDeltails.ProductPrice) VNĐ</p>
                                 @if (Model.ProductDeltails.Discount != 0)
@@ -44,34 +44,42 @@
 
                             </div>
                             <p class="text-intro">Một chiếc bàn xinh đẹp phù hợp với phong cách đơn giản nhưng đầy tinh tế và sang trọng.</p>
-                            <div class="soluong d-flex align-items-center">
-                               <p class="sl-text">Số lượng: </p>
-                                    <button class="Add_Quantity_Product">
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
+
+                                <div class="soluong d-flex align-items-center" style="justify-content:inherit">
+
+                                    <p class="sl-text">Số lượng: </p>
+                                    <button type="button" class="Add_Quantity_Product">
                                         <i class="fas fa-plus"></i>
-                                        
+
                                     </button>
-                                    <span class="Quantity_Product">1</span>
-                                    <button class="Minsus_Quantity_Product">
+                                    <input type="number"  id="Quantity_Product" name="Quantity" value="1"/>
+                                    <button type="button" class="Minsus_Quantity_Product">
                                         <i class="fas fa-minus"></i>
 
                                     </button>
-                            </div>
-                            <div class="rate d-flex">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
                                 </div>
-                                <div class="rate-number text-end">
-                                    <p>@Model.ProductDeltails.CountComment lượt xem</p>
+                                <div class="rate d-flex">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <div class="rate-number text-end">
+                                        <p>@Model.ProductDeltails.CountComment lượt xem</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons d-flex ">
-                                <button class="addCartDeltals" onclick="addToCart('b2','Bàn hình bầu dục Lenia Walnut', 10,3200000, 'img/ban/ban2/ban2.1.webp',0)"><i class="fas fa-cart-plus"></i>   Thêm vào giỏ</button>
-                                <!-- <button class="buyNow">Mua ngay</button> -->
-                            </div>
+                                <div class="buttons d-flex ">
+
+                                    <input type="hidden" name="ProductId" value="@Model.ProductDeltails.Id">
+                                    <button type="submit" class="addCartDeltals">
+                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                    </button>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -112,67 +120,71 @@
             <div class="suggest">
                 <div class="suggest-heading">Sản phẩm gợi ý</div>
                 <div class="row">
-                   
-                    @foreach(var item in Model.SuggestProduct)
+
+                    @foreach (var item in Model.SuggestProduct)
                     {
                         <div class="col-lg-3 col-md-6 col-12 nopadding">
-                        <div class="product">
-                            <a href="@Url.Action("Details","Product",new{id = @item.Id})">
-                                <img src=" @Url.Content(@url+@item.ThumbnailImage[0].ImagePath)" alt="" class="product-img">
-                                <div class="product-info">
-                                    <p class="name-product text-center">@item.ProductName</p>
-                                    <div class="price-product text-center d-flex align-items-center">
-                                        <p class="price">
-                                            @String.Format("{0:n0}", item.ProductPrice) VNĐ
+                            <div class="product">
+                                <a href="@Url.Action("Details","Product",new{id = @item.Id})">
+                                    <img src=" @Url.Content(@url+@item.ThumbnailImage[0].ImagePath)" alt="" class="product-img">
+                                    <div class="product-info">
+                                        <p class="name-product text-center">@item.ProductName</p>
+                                        <div class="price-product text-center d-flex align-items-center">
+                                            <p class="price">
+                                                @String.Format("{0:n0}", item.ProductPrice) VNĐ
 
-                                        </p>
-                                        @if (item.Discount != 0)
-                                        {
-                                            <p class="root-price">
-                                                @String.Format("{0:n0}", item.ProductOriginalPrice) VNĐ
                                             </p>
+                                            @if (item.Discount != 0)
+                                            {
+                                                <p class="root-price">
+                                                    @String.Format("{0:n0}", item.ProductOriginalPrice) VNĐ
+                                                </p>
 
-                                        }
-                                    </div>
-                                    <div class="rate d-flex">
-                                        <div class="stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
+                                            }
                                         </div>
-                                        <div class="rate-number">
-                                            <p>
-                                                @item.CountComment
-                                                lượt xem
-                                            </p>
+                                        <div class="rate d-flex">
+                                            <div class="stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                            <div class="rate-number">
+                                                <p>
+                                                    @item.CountComment
+                                                    lượt xem
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="buttons d-flex ">
-                                        <button class="addCart"
-                                                onclick="addToCart('sofa4','Sofa Gỗ Olio Xanh', 10,15600000,'img/sofa/sofa4/sofa4.1.webp',0)">
-                                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                                        </button>
-                                        <!-- <button class="buyNow">Mua ngay</button> -->
-                                    </div>
-                                </div>
-                            </a>
-                            @if (item.Discount != 0)
-                            {
-                                <div class="discount">
-                                    -20%
-                                </div>
-                            }
+                                        <div class="buttons d-flex ">
+                                            <input type="hidden" value="@item.Id" class="Id_Product_Details">
 
+                                            <form asp-action="AddToCart" asp-controller="Cart" method="post" style="width: 100%;">
+                                                <input type="hidden" name="ProductId" value="@Model.ProductDeltails.Id">
+                                                <input type="hidden" name="Quantity" value="1">
+                                                <button type="submit" class="addCart">
+                                                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </a>
+                                @if (item.Discount != 0)
+                                {
+                                    <div class="discount">
+                                        -@item.Discount%
+                                    </div>
+                                }
+
+                            </div>
                         </div>
-                    </div>
                     }
-                    
+
                 </div>
             </div>
         </div>
     </div>
-     <script src="~/js/quantityProduct.js"></script>
-
+    <script src="~/js/quantityProduct.js"></script>
+    <script src="~/js/AddCart.js"></script>
 </div>
