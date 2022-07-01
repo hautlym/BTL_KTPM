@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 @{
-    string url = "http://192.168.2.102:7022/user-content/";
+    string url = "http://192.168.43.186:7022/user-content/";
     
 }
 
@@ -450,7 +450,7 @@
             </div>
         </div>
 
-        <a href=""><button class="all-button">Xem thêm</button></a>
+        <a href="@Url.Action("Index","Product")"><button class="all-button">Xem thêm</button></a>
     </div>
 </div>
 <div class="comment text-center">

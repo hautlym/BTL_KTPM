@@ -1,4 +1,5 @@
 using BTL_KTPM.ApiIntegration.Service.CategoryApiClient;
+using BTL_KTPM.ApiIntegration.Service.ContactApiClient;
 using BTL_KTPM.ApiIntegration.Service.OrderApaiClient;
 using BTL_KTPM.ApiIntegration.Service.ProducerApiClient;
 using BTL_KTPM.ApiIntegration.Service.ProductApiClient;
@@ -38,6 +39,7 @@ builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
 builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
+builder.Services.AddTransient<IContactApiClient, ContactApiClient>();
 builder.Services.AddTransient<IManageProducerApiClient, ManageProducerApiClient>();
 builder.Services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
