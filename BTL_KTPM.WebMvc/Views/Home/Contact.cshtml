@@ -2,6 +2,14 @@
     ViewData["Title"] = "Contact";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Scripts{
+<script>
+    setTimeout(function(){
+        $('#msgAlert').fadeOut("slow");
+    },2000);
+
+</script>
+}
 <div class="container-fluid">
     <div class="banner">
         <div class="inner">
@@ -41,7 +49,12 @@
                 </div>
                 <div class="col-lg-9">
                     <p class="content">Nội dung liên hệ</p>
-                    
+                    @if (ViewBag.SuscessMsg != null)
+                    {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                            @ViewBag.SuscessMsg
+                    </div>
+                    }
                     <div class="inputs">
                         <form action="/Home/Contact" method="post">
                         <div class="name" >

@@ -31,6 +31,10 @@ namespace BTL_KTPM.WebMvc.Controllers
             };
             return View(HomeViewModel);
         }
+        public IActionResult News()
+        {
+            return View();
+        }
         public  IActionResult About()
         {
             return View();
@@ -45,7 +49,11 @@ namespace BTL_KTPM.WebMvc.Controllers
             var kq =await _contactApiClient.CreateContact(request);
             if (kq.IsSuccessed)
             {
-                return View();
+                ViewBag.SuscessMsg = "Gửi thành công";
+            }
+            else
+            {
+                ViewBag.SuscessMsg = "Gửi thành công";
             }
             return View();
         }
