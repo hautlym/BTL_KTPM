@@ -27,16 +27,16 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.WebHost.ConfigureKestrel(options => options.Listen(System.Net.IPAddress.Parse("192.168.1.14"), 5003));
 
 //Cau hinh kenstel 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP( 8090); // to listen for incoming http connection on port 5001
-    options.ListenLocalhost(8091);
-    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(2);
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP( 8090); // to listen for incoming http connection on port 5001
+//    options.ListenLocalhost(8091);
+//    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(2);
     
-    options.ListenAnyIP(7001, configure => configure.UseHttps()); // to listen for incoming https connection on port 7001
-});
-builder.WebHost.UseUrls("http://*:8090", "https://*:8091");
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
+//    options.ListenAnyIP(7001, configure => configure.UseHttps()); // to listen for incoming https connection on port 7001
+//});
+//builder.WebHost.UseUrls("http://*:8090", "https://*:8091");
+//builder.WebHost.UseUrls("http://0.0.0.0:5000");
 //=====================
 // Add services to the container.
 builder.Services.AddControllers();
