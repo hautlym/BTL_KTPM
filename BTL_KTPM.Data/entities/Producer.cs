@@ -11,7 +11,7 @@ namespace BTL_KTPM.Data.entities
         public int ProducerId { get; set; }
         public string ProducerName { get; set; }
         public string Description { get; set; }
-        public string SĐT { get; set; }
+        public string? SĐT { get; set; }
         public string Address { get; set; }
         public List<Product> Products { get; set; }
 

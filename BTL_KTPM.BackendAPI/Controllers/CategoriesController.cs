@@ -31,7 +31,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             return Ok(categories);
         }
 
-        [HttpGet("{CategoryId}")]
+        [HttpGet("CategoryId")]
         public async Task<IActionResult> GetbyId(int CategoryId)
         {
             var category = await _manageCategory.GetById(CategoryId);
@@ -64,7 +64,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{CategoryId}")]
+        [HttpDelete()]
         public async Task<IActionResult> Delete(int CategoryId)
         {
             var Result = await _manageCategory.Delete(CategoryId);

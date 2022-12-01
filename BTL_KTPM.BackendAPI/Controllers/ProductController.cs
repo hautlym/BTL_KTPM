@@ -43,10 +43,14 @@ namespace BTL_KTPM.BackendAPI.Controllers
         public async Task<IActionResult> GetbyName([FromQuery] string name)
         {
             var product = await _publicProductService.GetProductByName(name);
+            if (product.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(product);
         }
-        [HttpGet("{productId}")]
-        public async Task<IActionResult> GetById(int productId)
+        [HttpGet("getProductById")]
+        public async Task<ActionResult<ProductViewModel>> GetById(int productId)
         {
             var product = await _manageProductService.GetById(productId);
             if (product == null)
@@ -88,7 +92,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{productId}")]
+        [HttpDelete()]
         public async Task<IActionResult> Delete(int productId)
         {
             var Result = await _manageProductService.Delete(productId);

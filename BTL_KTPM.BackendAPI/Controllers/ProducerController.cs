@@ -46,7 +46,7 @@ namespace BTL_KTPM.BackendAPI.Controllers
             }
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateProducerRequest request)
         {
             var result = await _manageProducer.Create(request);

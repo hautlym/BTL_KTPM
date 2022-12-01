@@ -87,7 +87,7 @@ namespace BTL_KTPM.ApiIntegration.Service.ProductApiClient
             var client = _httpClient.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/Product/{id}");
+            var response = await client.GetAsync($"/api/Product/getProductById");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ProductViewModel>(body);

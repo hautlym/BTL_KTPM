@@ -14,32 +14,19 @@ using BTL_KTPM.Data.entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
-using System.Net;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.WebHost.ConfigureKestrel(options => options.Listen(System.Net.IPAddress.Parse("192.168.1.14"), 5003));
-
-//Cau hinh kenstel 
-//builder.WebHost.ConfigureKestrel(options =>
-//{
-//    options.ListenAnyIP( 8090); // to listen for incoming http connection on port 5001
-//    options.ListenLocalhost(8091);
-//    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(2);
-    
-//    options.ListenAnyIP(7001, configure => configure.UseHttps()); // to listen for incoming https connection on port 7001
-//});
-//builder.WebHost.UseUrls("http://*:8090", "https://*:8091");
-//builder.WebHost.UseUrls("http://0.0.0.0:5000");
-//=====================
 // Add services to the container.
+
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(
@@ -126,20 +113,16 @@ builder.Services.AddAuthentication(opt =>
                    IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                };
            });
-        
+
 
 var app = builder.Build();
-// confi deploy
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
-//===========
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHsts();
 }
 app.UseStaticFiles();
 app.UseHttpsRedirection();
